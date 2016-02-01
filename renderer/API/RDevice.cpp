@@ -437,9 +437,6 @@ Functions like a frame-counter, but respects different rendering-stages */
 				((RPipelineState *) q2.Queue[i])->Locked = false;
 			}
 
-			if (q2.QueueCommandLists.empty())
-				__debugbreak();
-
 			// Finalize threads commandlist
 			LEB(q2.QueueCommandLists[threadIdx]->FinalizeCommandList());
 		};
