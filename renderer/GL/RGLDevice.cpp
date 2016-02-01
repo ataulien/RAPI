@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "RGLDevice.h"
-#include "RGLUtils.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -11,8 +10,6 @@ using namespace RAPI;
 
 bool RGLDevice::CreateDeviceAPI()
 {
-    RTools::GLExtMgr &ext = RTools::GLExtMgr::getSingleton();
-
     return true;
 }
 
@@ -23,7 +20,7 @@ bool RGLDevice::SetWindowAPI()
     HDC deviceContext = GetDC(static_cast<HWND>(OutputWindow));
     DeviceContext = static_cast<void*>(deviceContext);
     HGLRC renderContext;
-#endif
+
 
     static PIXELFORMATDESCRIPTOR pfd = {
             sizeof(PIXELFORMATDESCRIPTOR),  // Size Of This Pixel Format Descriptor
@@ -77,7 +74,7 @@ bool RGLDevice::SetWindowAPI()
     glViewport(0, 0, windowSize.x, windowSize.y);
 
     glClearColor(0.0f, 0.5f, 0.5f,0.0f);
-
+#endif
     return true;
 }
 
@@ -107,7 +104,9 @@ bool RGLDevice::OnFrameEndAPI()
 
 bool RGLDevice::PresentAPI()
 {
+#ifdef WIN32
     SwapBuffers(static_cast<HDC>(DeviceContext));
+#endif
     return true;
 }
 
