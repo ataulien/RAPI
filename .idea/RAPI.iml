@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="CPP_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Logger.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Logger.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Types.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/pch.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/pch.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/IObserver.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RBlendState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RBlendState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RBuffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RBuffer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RBufferCollection.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RCommandList.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RCommandList.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RDepthStencilState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RDepthStencilState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RDevice.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RDevice.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RDynamicBufferCache.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RDynamicBufferCache.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/REngine.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/REngine.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RInputLayout.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RInputLayout.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RLineRenderer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RLineRenderer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RObservable.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RPagedBuffer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RPipelineState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RPixelShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RPixelShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RProdConsBuffer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RProfiler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RProfiler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RRasterizerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RRasterizerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RResource.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RResource.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RResourceCache.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RResourceCache.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RSamplerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RSamplerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RSemaphore.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RStateMachine.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RStateMachine.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RTexture.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RTexture.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RTextureAtlas.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RTextureAtlas.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RTweakBar.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RTweakBar.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RVertexShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RVertexShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RViewport.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/API/RViewport.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11BlendState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11BlendState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Buffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Buffer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11CommandList.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11CommandList.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11DepthStencilState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11DepthStencilState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Device.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Device.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11InputLayout.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11InputLayout.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11PixelShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11PixelShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Profiler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Profiler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11RasterizerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11RasterizerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11SamplerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11SamplerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Shader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Shader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11SyncCheck.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Texture.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Texture.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11TweakBar.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11TweakBar.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11VertexShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11VertexShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Viewport.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/D3D11/RD3D11Viewport.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLBlendState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLBlendState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLBuffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLBuffer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLCommandList.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLCommandList.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLDepthStencilState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLDepthStencilState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLDevice.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLDevice.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLInputLayout.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLInputLayout.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLPixelShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLPixelShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLProfiler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLProfiler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLRasterizerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLRasterizerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLSamplerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLSamplerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLTexture.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLTexture.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLTweakbar.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLTweakbar.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLUtils.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLVertexShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLVertexShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLViewport.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/GL/RGLViewport.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLBlendState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLBlendState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLBuffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLBuffer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLCommandList.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLCommandList.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLDepthStencilState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLDepthStencilState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLDevice.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLDevice.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLInputLayout.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLInputLayout.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLPixelShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLPixelShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLProfiler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLProfiler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLRasterizerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLRasterizerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLSamplerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLSamplerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLTexture.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLTexture.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLTweakbar.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLTweakbar.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLVertexShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLVertexShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLViewport.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/NULL/RNULLViewport.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseBlendState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseBlendState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseBuffer.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseBuffer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseCommandList.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseCommandList.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseDepthStencilState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseDepthStencilState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseDevice.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseDevice.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseInputLayout.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseInputLayout.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseProfiler.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseProfiler.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseRasterizerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseRasterizerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseSamplerState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseSamplerState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseShader.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseShader.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseTexture.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseTexture.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseViewport.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RBaseViewport.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RTweakBarBase.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/base/RTweakBarBase.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/utils/RThreadPool.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/utils/RTimer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/utils/RTools.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/renderer/utils/RTools.h" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library name="Header Search Paths">
+        <CLASSES>
+          <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include" />
+          <root url="file:///usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include-fixed" />
+          <root url="file:///usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include/cilk" />
+          <root url="file:///usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include/sanitizer" />
+          <root url="file:///usr/local/include" />
+        </CLASSES>
+        <SOURCES>
+          <root url="file:///usr/include" />
+          <root url="file:///usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include" />
+          <root url="file:///usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include-fixed" />
+          <root url="file:///usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include/cilk" />
+          <root url="file:///usr/lib/gcc/x86_64-unknown-linux-gnu/5.3.0/include/sanitizer" />
+          <root url="file:///usr/local/include" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>
