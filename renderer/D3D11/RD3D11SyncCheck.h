@@ -212,7 +212,7 @@ namespace RAPI
 			int thread;
 		};
 
-		__declspec(selectany) __sync_check_stash GlobalSyncCheckStash;
+		SELECTANY __sync_check_stash GlobalSyncCheckStash;
 
 	}
 }

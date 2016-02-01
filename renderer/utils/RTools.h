@@ -41,8 +41,8 @@ namespace RAPI
 	namespace RTools
 	{
 		/** Line renderer */
-		__declspec(selectany) RLineRenderer LineRenderer;
-		__declspec(selectany) RTweakBar TweakBar;
+		SELECTANY RLineRenderer LineRenderer;
+		SELECTANY RTweakBar TweakBar;
 
 		/** Shader loading functions, which also cache the objects by using the alias as hash */
 		//static RVertexShader* LoadVertexShader(const std::string& file,

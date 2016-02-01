@@ -1,5 +1,5 @@
 #pragma once
-#include "rresource.h"
+#include "RResource.h"
 
 namespace RAPI
 {
