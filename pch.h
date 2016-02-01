@@ -7,8 +7,8 @@
 
 #endif
 
-//#define RND_GL
-#define RND_D3D11
+#define RND_GL
+//#define RND_D3D11
 
 #ifdef RND_D3D11
 // Disable warning about makro-redifinitions
