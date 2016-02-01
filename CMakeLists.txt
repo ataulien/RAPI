@@ -93,7 +93,7 @@ add_definitions(-DNOMINMAX -D_CRT_SECURE_NO_WARNINGS)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "lib")
 
 IF( WIN32 )
-add_library(RAPI WIN32 ${SOURCE_FILES})
+add_library(RAPI ${SOURCE_FILES})
 ELSE()
 add_library(RAPI ${SOURCE_FILES})
 ENDIF()
