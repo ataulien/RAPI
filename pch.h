@@ -46,6 +46,12 @@ typedef void* WindowHandle;
 #include <sstream>
 #include "Types.h"
 
+#ifdef _MSC_VER
+#define SELECTANY __declspec(selectany)
+#elif __GNUC__
+#define SELECTANY __attribute__((weak))
+#endif
+
 #define R_PI 3.14159265358979f
 
 #define SafeRelease(x) do{if(x){x->Release(); x = NULL;}}while(0)
