@@ -17,7 +17,7 @@ RTexture::~RTexture()
 */
 bool RTexture::CreateTexture(const void *textureData,
                              uint32_t sizeInBytes,
-                             int2 resolution,
+                             RInt2 resolution,
                              unsigned int numMipLevels,
                              ETextureFormat textureFormat,
                              EBindFlags bindFlags,

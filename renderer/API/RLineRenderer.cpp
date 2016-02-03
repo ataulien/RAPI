@@ -11,6 +11,7 @@
 #include "RVertexShader.h"
 #include "RPixelShader.h"
 #include "REngine.h"
+#include "Logger.h"
 
 namespace RAPI
 {
@@ -21,26 +22,26 @@ namespace RAPI
 
 	const char *LINE_VERTEX_SHADER = "cbuffer Matrices_PerFrame : register( b0 )"
 			"{"
-			"	matrix M_ViewProj;	"
+			"	RMatrix M_ViewProj;	"
 			"};"
 			""
 			"struct VS_INPUT"
 			"{"
-			"	float4 vPosition	: POSITION;"
-			"	float4 vDiffuse		: DIFFUSE;"
+			"	RFloat4 vPosition	: POSITION;"
+			"	RFloat4 vDiffuse		: DIFFUSE;"
 			"};"
 			""
 			"struct VS_OUTPUT"
 			"{"
-			"	float4 vDiffuse			: TEXCOORD0;"
-			"	float4 vPosition		: SV_POSITION;"
+			"	RFloat4 vDiffuse			: TEXCOORD0;"
+			"	RFloat4 vPosition		: SV_POSITION;"
 			"};"
 			""
 			"VS_OUTPUT VSMain( VS_INPUT Input )"
 			"{"
 			"	VS_OUTPUT Output;"
 			""
-			"	Output.vPosition = mul( float4(Input.vPosition.xyz,1), M_ViewProj);"
+			"	Output.vPosition = mul( RFloat4(Input.vPosition.xyz,1), M_ViewProj);"
 			"	Output.vDiffuse  = Input.vDiffuse;"
 			""
 			"	Output.vPosition.z *= Input.vPosition.w;"
@@ -50,12 +51,12 @@ namespace RAPI
 
 	const char *LINE_PIXEL_SHADER = "struct PS_INPUT"
 			"{"
-			"	float4 vDiffuse			: TEXCOORD0;"
-			"	float4 vPosition		: SV_POSITION;"
+			"	RFloat4 vDiffuse			: TEXCOORD0;"
+			"	RFloat4 vPosition		: SV_POSITION;"
 			"};"
 			""
 			""
-			"float4 PSMain( PS_INPUT Input ) : SV_TARGET"
+			"RFloat4 PSMain( PS_INPUT Input ) : SV_TARGET"
 			"{"
 			"	return Input.vDiffuse;"
 			"}";
@@ -156,7 +157,7 @@ namespace RAPI
 	}
 
 /** Flushes the cached lines */
-	bool RLineRenderer::Flush(const Matrix &viewProj)
+	bool RLineRenderer::Flush(const RMatrix &viewProj)
 	{
 		if (LastFrameFlushed == REngine::RenderingDevice->GetFrameCounter()) {
 			LogWarn() << "LineRenderer should only be flushed once per frame!";
@@ -206,19 +207,19 @@ namespace RAPI
 	}
 
 /** Plots a vector of floats */
-	void RLineRenderer::PlotNumbers(const std::vector<float> &values, const float3 &location, const float3 &direction,
-									float distance, float heightScale, const float4 &color)
+	void RLineRenderer::PlotNumbers(const std::vector<float> &values, const RFloat3 &location, const RFloat3 &direction,
+									float distance, float heightScale, const RFloat4 &color)
 	{
 		/*for (unsigned int i = 1; i < values.size(); i++) {
 			AddLine(LineVertex(location + (direction * (float) (i - 1) * distance) +
-							   float3(0, 0, values[i - 1] * heightScale), color),
-					LineVertex(location + (direction * (float) i * distance) + float3(0, 0, values[i] * heightScale),
+							   RFloat3(0, 0, values[i - 1] * heightScale), color),
+					LineVertex(location + (direction * (float) i * distance) + RFloat3(0, 0, values[i] * heightScale),
 							   color));
 		}*/
 	}
 
 /** Adds a triangle to the renderlist */
-	void RLineRenderer::AddTriangle(const float3 &t0, const float3 &t1, const float3 &t2, const float4 &color)
+	void RLineRenderer::AddTriangle(const RFloat3 &t0, const RFloat3 &t1, const RFloat3 &t2, const RFloat4 &color)
 	{
 		AddLine(LineVertex(t0, color), LineVertex(t1, color));
 		AddLine(LineVertex(t0, color), LineVertex(t2, color));
@@ -226,21 +227,21 @@ namespace RAPI
 	}
 
 /** Adds a point locator to the renderlist */
-	void RLineRenderer::AddPointLocator(const float3 &location, float size, const float4 &color)
+	void RLineRenderer::AddPointLocator(const RFloat3 &location, float size, const RFloat4 &color)
 	{
-		float3 u = location;
+		RFloat3 u = location;
 		u.z += size;
-		float3 d = location;
+		RFloat3 d = location;
 		d.z -= size;
 
-		float3 r = location;
+		RFloat3 r = location;
 		r.x += size;
-		float3 l = location;
+		RFloat3 l = location;
 		l.x -= size;
 
-		float3 b = location;
+		RFloat3 b = location;
 		b.y += size;
-		float3 f = location;
+		RFloat3 f = location;
 		f.y -= size;
 
 		AddLine(LineVertex(u, color), LineVertex(d, color));
@@ -249,26 +250,26 @@ namespace RAPI
 	}
 
 /** Adds a plane to the renderlist */
-	void RLineRenderer::AddPlane(const float4 &plane, const float3 &origin, float size, const float4 &color)
+	void RLineRenderer::AddPlane(const RFloat4 &plane, const RFloat3 &origin, float size, const RFloat4 &color)
 	{
-		/*float3 pNormal = float3(plane);
+		/*RFloat3 pNormal = RFloat3(plane);
 
-		float3 DebugPlaneP1;
+		RFloat3 DebugPlaneP1;
 		DebugPlaneP1.x = 1;
 		DebugPlaneP1.y = 1;
 		DebugPlaneP1.z = ((-plane.x - plane.y) / plane.z);
 
 		DebugPlaneP1.Normalize();
 
-		float3 DebugPlaneP2 = pNormal.Cross(DebugPlaneP1);
+		RFloat3 DebugPlaneP2 = pNormal.Cross(DebugPlaneP1);
 
 		//DebugPlaneP2 += SlidingPlaneOrigin;
-		float3 &p1 = DebugPlaneP1;
-		float3 &p2 = DebugPlaneP2;
-		float3 O = origin;
+		RFloat3 &p1 = DebugPlaneP1;
+		RFloat3 &p2 = DebugPlaneP2;
+		RFloat3 O = origin;
 
-		float3 from;
-		float3 to;
+		RFloat3 from;
+		RFloat3 to;
 		from = (O - p1) - p2;
 		to = (O - p1) + p2;
 		AddLine(LineVertex(from), LineVertex(to));
@@ -287,87 +288,87 @@ namespace RAPI
 	}
 
 /** Adds an AABB-Box to the renderlist */
-	void RLineRenderer::AddAABB(const float3 &location, float halfSize, const float4 &color)
+	void RLineRenderer::AddAABB(const RFloat3 &location, float halfSize, const RFloat4 &color)
 	{
 		// Bottom -x -y -z to +x -y -z
-		AddLine(LineVertex(float3(location.x - halfSize, location.y - halfSize, location.z - halfSize), color),
-				LineVertex(float3(location.x + halfSize, location.y - halfSize, location.z - halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x - halfSize, location.y - halfSize, location.z - halfSize), color),
+				LineVertex(RFloat3(location.x + halfSize, location.y - halfSize, location.z - halfSize), color));
 
-		AddLine(LineVertex(float3(location.x + halfSize, location.y - halfSize, location.z - halfSize), color),
-				LineVertex(float3(location.x + halfSize, location.y + halfSize, location.z - halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x + halfSize, location.y - halfSize, location.z - halfSize), color),
+				LineVertex(RFloat3(location.x + halfSize, location.y + halfSize, location.z - halfSize), color));
 
-		AddLine(LineVertex(float3(location.x + halfSize, location.y + halfSize, location.z - halfSize), color),
-				LineVertex(float3(location.x - halfSize, location.y + halfSize, location.z - halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x + halfSize, location.y + halfSize, location.z - halfSize), color),
+				LineVertex(RFloat3(location.x - halfSize, location.y + halfSize, location.z - halfSize), color));
 
-		AddLine(LineVertex(float3(location.x - halfSize, location.y + halfSize, location.z - halfSize), color),
-				LineVertex(float3(location.x - halfSize, location.y - halfSize, location.z - halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x - halfSize, location.y + halfSize, location.z - halfSize), color),
+				LineVertex(RFloat3(location.x - halfSize, location.y - halfSize, location.z - halfSize), color));
 
 		// Top
-		AddLine(LineVertex(float3(location.x - halfSize, location.y - halfSize, location.z + halfSize), color),
-				LineVertex(float3(location.x + halfSize, location.y - halfSize, location.z + halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x - halfSize, location.y - halfSize, location.z + halfSize), color),
+				LineVertex(RFloat3(location.x + halfSize, location.y - halfSize, location.z + halfSize), color));
 
-		AddLine(LineVertex(float3(location.x + halfSize, location.y - halfSize, location.z + halfSize), color),
-				LineVertex(float3(location.x + halfSize, location.y + halfSize, location.z + halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x + halfSize, location.y - halfSize, location.z + halfSize), color),
+				LineVertex(RFloat3(location.x + halfSize, location.y + halfSize, location.z + halfSize), color));
 
-		AddLine(LineVertex(float3(location.x + halfSize, location.y + halfSize, location.z + halfSize), color),
-				LineVertex(float3(location.x - halfSize, location.y + halfSize, location.z + halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x + halfSize, location.y + halfSize, location.z + halfSize), color),
+				LineVertex(RFloat3(location.x - halfSize, location.y + halfSize, location.z + halfSize), color));
 
-		AddLine(LineVertex(float3(location.x - halfSize, location.y + halfSize, location.z + halfSize), color),
-				LineVertex(float3(location.x - halfSize, location.y - halfSize, location.z + halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x - halfSize, location.y + halfSize, location.z + halfSize), color),
+				LineVertex(RFloat3(location.x - halfSize, location.y - halfSize, location.z + halfSize), color));
 
 		// Sides
-		AddLine(LineVertex(float3(location.x - halfSize, location.y - halfSize, location.z + halfSize), color),
-				LineVertex(float3(location.x - halfSize, location.y - halfSize, location.z - halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x - halfSize, location.y - halfSize, location.z + halfSize), color),
+				LineVertex(RFloat3(location.x - halfSize, location.y - halfSize, location.z - halfSize), color));
 
-		AddLine(LineVertex(float3(location.x + halfSize, location.y - halfSize, location.z + halfSize), color),
-				LineVertex(float3(location.x + halfSize, location.y - halfSize, location.z - halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x + halfSize, location.y - halfSize, location.z + halfSize), color),
+				LineVertex(RFloat3(location.x + halfSize, location.y - halfSize, location.z - halfSize), color));
 
-		AddLine(LineVertex(float3(location.x + halfSize, location.y + halfSize, location.z + halfSize), color),
-				LineVertex(float3(location.x + halfSize, location.y + halfSize, location.z - halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x + halfSize, location.y + halfSize, location.z + halfSize), color),
+				LineVertex(RFloat3(location.x + halfSize, location.y + halfSize, location.z - halfSize), color));
 
-		AddLine(LineVertex(float3(location.x - halfSize, location.y + halfSize, location.z + halfSize), color),
-				LineVertex(float3(location.x - halfSize, location.y + halfSize, location.z - halfSize), color));
+		AddLine(LineVertex(RFloat3(location.x - halfSize, location.y + halfSize, location.z + halfSize), color),
+				LineVertex(RFloat3(location.x - halfSize, location.y + halfSize, location.z - halfSize), color));
 
 	}
 
 /** Adds an AABB-Box to the renderlist */
-	void RLineRenderer::AddAABB(const float3 &location, const float3 &halfSize, const float4 &color)
+	void RLineRenderer::AddAABB(const RFloat3 &location, const RFloat3 &halfSize, const RFloat4 &color)
 	{
-		AddAABBMinMax(float3(location.x - halfSize.x,
+		AddAABBMinMax(RFloat3(location.x - halfSize.x,
 							 location.y - halfSize.y,
-							 location.z - halfSize.z), float3(location.x + halfSize.x,
+							 location.z - halfSize.z), RFloat3(location.x + halfSize.x,
 															  location.y + halfSize.y,
 															  location.z + halfSize.z), color);
 	}
 
 
-	void RLineRenderer::AddAABBMinMax(const float3 &min, const float3 &max, const float4 &color)
+	void RLineRenderer::AddAABBMinMax(const RFloat3 &min, const RFloat3 &max, const RFloat4 &color)
 	{
-		AddLine(LineVertex(float3(min.x, min.y, min.z), color), LineVertex(float3(max.x, min.y, min.z), color));
-		AddLine(LineVertex(float3(max.x, min.y, min.z), color), LineVertex(float3(max.x, max.y, min.z), color));
-		AddLine(LineVertex(float3(max.x, max.y, min.z), color), LineVertex(float3(min.x, max.y, min.z), color));
-		AddLine(LineVertex(float3(min.x, max.y, min.z), color), LineVertex(float3(min.x, min.y, min.z), color));
+		AddLine(LineVertex(RFloat3(min.x, min.y, min.z), color), LineVertex(RFloat3(max.x, min.y, min.z), color));
+		AddLine(LineVertex(RFloat3(max.x, min.y, min.z), color), LineVertex(RFloat3(max.x, max.y, min.z), color));
+		AddLine(LineVertex(RFloat3(max.x, max.y, min.z), color), LineVertex(RFloat3(min.x, max.y, min.z), color));
+		AddLine(LineVertex(RFloat3(min.x, max.y, min.z), color), LineVertex(RFloat3(min.x, min.y, min.z), color));
 
-		AddLine(LineVertex(float3(min.x, min.y, max.z), color), LineVertex(float3(max.x, min.y, max.z), color));
-		AddLine(LineVertex(float3(max.x, min.y, max.z), color), LineVertex(float3(max.x, max.y, max.z), color));
-		AddLine(LineVertex(float3(max.x, max.y, max.z), color), LineVertex(float3(min.x, max.y, max.z), color));
-		AddLine(LineVertex(float3(min.x, max.y, max.z), color), LineVertex(float3(min.x, min.y, max.z), color));
+		AddLine(LineVertex(RFloat3(min.x, min.y, max.z), color), LineVertex(RFloat3(max.x, min.y, max.z), color));
+		AddLine(LineVertex(RFloat3(max.x, min.y, max.z), color), LineVertex(RFloat3(max.x, max.y, max.z), color));
+		AddLine(LineVertex(RFloat3(max.x, max.y, max.z), color), LineVertex(RFloat3(min.x, max.y, max.z), color));
+		AddLine(LineVertex(RFloat3(min.x, max.y, max.z), color), LineVertex(RFloat3(min.x, min.y, max.z), color));
 
-		AddLine(LineVertex(float3(min.x, min.y, min.z), color), LineVertex(float3(min.x, min.y, max.z), color));
-		AddLine(LineVertex(float3(max.x, min.y, min.z), color), LineVertex(float3(max.x, min.y, max.z), color));
-		AddLine(LineVertex(float3(max.x, max.y, min.z), color), LineVertex(float3(max.x, max.y, max.z), color));
-		AddLine(LineVertex(float3(min.x, max.y, min.z), color), LineVertex(float3(min.x, max.y, max.z), color));
+		AddLine(LineVertex(RFloat3(min.x, min.y, min.z), color), LineVertex(RFloat3(min.x, min.y, max.z), color));
+		AddLine(LineVertex(RFloat3(max.x, min.y, min.z), color), LineVertex(RFloat3(max.x, min.y, max.z), color));
+		AddLine(LineVertex(RFloat3(max.x, max.y, min.z), color), LineVertex(RFloat3(max.x, max.y, max.z), color));
+		AddLine(LineVertex(RFloat3(min.x, max.y, min.z), color), LineVertex(RFloat3(min.x, max.y, max.z), color));
 	}
 
 /** Adds a ring to the renderlist */
-	void RLineRenderer::AddRingZ(const float3 &location, float size, const float4 &color, int res)
+	void RLineRenderer::AddRingZ(const RFloat3 &location, float size, const RFloat4 &color, int res)
 	{
-		std::vector<float3> points;
+		std::vector<RFloat3> points;
 		float step = (float) (R_PI * 2) / (float) res;
 
 		for (int i = 0; i < res; i++) {
 			points.push_back(
-					float3(size * sinf(step * i) + location.x, size * cosf(step * i) + location.y, location.z));
+					RFloat3(size * sinf(step * i) + location.x, size * cosf(step * i) + location.y, location.z));
 		}
 
 		for (unsigned int i = 0; i < points.size() - 1; i++) {

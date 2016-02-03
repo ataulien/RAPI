@@ -37,7 +37,7 @@ namespace RAPI
 	}
 
 /** Constructs the textureatlas out of all the given textures */
-	bool RTextureAtlas::Construct(int2 singleTextureDimensions)
+	bool RTextureAtlas::Construct(RInt2 singleTextureDimensions)
 	{
 		if (Atlas) // Already created?
 			return false;
@@ -49,8 +49,8 @@ namespace RAPI
 
 
 		// Compute UVs and actual texture size
-		int2 texturePos = int2(0, 0);
-		int2 textureSize = singleTextureDimensions;
+		RInt2 texturePos = RInt2(0, 0);
+		RInt2 textureSize = singleTextureDimensions;
 		for (auto &t : StoredTextures) {
 			// Check if we need a bigger size
 			if (texturePos.x == textureSize.x && texturePos.y == textureSize.y - singleTextureDimensions.y) {
@@ -77,7 +77,7 @@ namespace RAPI
 			}
 
 			// Store the UV for the texture
-			TextureUVs[t.first] = std::make_pair(float2(texturePos.x, texturePos.y), float2(0, 0));
+			TextureUVs[t.first] = std::make_pair(RFloat2(texturePos.x, texturePos.y), RFloat2(0, 0));
 
 			// Goto next position
 			texturePos.x += singleTextureDimensions.x;

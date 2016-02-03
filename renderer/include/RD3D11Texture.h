@@ -28,7 +28,7 @@ namespace RAPI
          * Creates this texture directly from an API-Resource
          */
         bool CreateDirect(ID3D11Texture2D* texture,
-            int2 resolution,
+            RInt2 resolution,
             unsigned int numMipLevels = 10,
             ETextureFormat textureFormat = ETextureFormat::TF_R8G8B8A8,
             EBindFlags bindFlags = EBindFlags::B_SHADER_RESOURCE,

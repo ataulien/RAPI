@@ -389,25 +389,25 @@ namespace RAPI
 		}
 
 		/**
-         * Converts a RDWORD-Color to float4
+         * Converts a RDWORD-Color to RFloat4
          */
-		static float4 RDWORDToFloat4(RDWORD color)
+		static RFloat4 RDWORDToRFloat4(RDWORD color)
 		{
 			byte a = color >> 24;
 			byte r = (color >> 16) & 0xFF;
 			byte g = (color >> 8) & 0xFF;
 			byte b = color & 0xFF;
 
-			return float4(r / 255.0f,
+			return RFloat4(r / 255.0f,
 						  g / 255.0f,
 						  b / 255.0f,
 						  a / 255.0f);
 		}
 
 		/**
-         * Converts a float4-Color to RDWORD. Values are clamped to 1. Stored as argb, where a is the 4th byte.
+         * Converts a RFloat4-Color to RDWORD. Values are clamped to 1. Stored as argb, where a is the 4th byte.
          */
-		static RDWORD float4ToRDWORD(const float4 &color)
+		static RDWORD RFloat4ToRDWORD(const RFloat4 &color)
 		{
 			RDWORD dw;
 			byte *v = (byte *) &dw;

@@ -129,7 +129,7 @@ namespace RAPI {
 		/**
 		* Returns the resolution needed for the given window
 		*/
-		int2 GetWindowResolution(WindowHandle hWnd);
+		RInt2 GetWindowResolution(WindowHandle hWnd);
 
 		/**
          * Returns a list of all result the profiler has gathered

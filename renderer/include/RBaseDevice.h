@@ -50,7 +50,7 @@ namespace RAPI {
 		/**
          * Returns the resolution of the window we are currently drawing to
          */
-		const int2 &GetOutputResolution() { return OutputResolution; }
+		const RInt2 &GetOutputResolution() { return OutputResolution; }
 
 		/**
          * Access to the underlaying state machine
@@ -60,7 +60,7 @@ namespace RAPI {
 		/**
          * Sets the clear values for the main buffers
          */
-		void SetMainClearValues(const float4 &color, float z = 1.0f) {
+		void SetMainClearValues(const RFloat4 &color, float z = 1.0f) {
 			MainColorBufferClearColor = color;
 			MainDepthBufferClearZ = z;
 		}
@@ -70,7 +70,7 @@ namespace RAPI {
 		WindowHandle OutputWindow;
 
 		// Output resolution of backbuffer
-		int2 OutputResolution;
+		RInt2 OutputResolution;
 
 		// State machine for the device. Helps to reduce unneeded statechanges.
 		RStateMachine StateMachine;
@@ -88,7 +88,7 @@ namespace RAPI {
 		std::vector<RRenderQueue *> RenderQueue;
 
 		// Values to clear the main buffers with when a new frame is started
-		float4 MainColorBufferClearColor;
+		RFloat4 MainColorBufferClearColor;
 		float MainDepthBufferClearZ;
 
 		// Main profiler

@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "RGLDevice.h"
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <GL/glew.h>
 
 #ifdef RND_GL
 
@@ -70,11 +69,15 @@ bool RGLDevice::SetWindowAPI()
     }
 
     // Init first viewport
-    int2 windowSize = GetWindowResolutionAPI(OutputWindow);
+    RInt2 windowSize = GetWindowResolutionAPI(OutputWindow);
     glViewport(0, 0, windowSize.x, windowSize.y);
 
     glClearColor(0.0f, 0.5f, 0.5f,0.0f);
 #endif
+
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+		LogError() << "Failed to init GLEW";
     return true;
 }
 
@@ -144,15 +147,15 @@ bool RGLDevice::GetDisplayModeListAPI(std::vector<DisplayModeInfo> &modeList, bo
 /**
  * Returns the resolution needed for the given window
  */
-int2 RGLDevice::GetWindowResolutionAPI(WindowHandle hWnd)
+RInt2 RGLDevice::GetWindowResolutionAPI(WindowHandle hWnd)
 {
 #ifdef WIN32
     RECT r;
     GetClientRect(static_cast<HWND>(hWnd), &r);
-    return int2(r.right-r.left, r.bottom-r.top);
+    return RInt2(r.right-r.left, r.bottom-r.top);
 #else
     // FIXME
-    return int2(800,600);
+    return RInt2(800,600);
 #endif
 }
 #endif

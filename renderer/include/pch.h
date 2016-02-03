@@ -1,14 +1,10 @@
 #pragma once
 
 #ifdef WIN32
-//#define RND_D3D11
+#define RND_D3D11
 #else
-//#define RND_NULL
-
-#endif
-
 #define RND_GL
-//#define RND_D3D11
+#endif
 
 #ifdef RND_D3D11
 // Disable warning about makro-redifinitions

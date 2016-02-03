@@ -501,7 +501,7 @@ Functions like a frame-counter, but respects different rendering-stages */
 	/**
 	 * Returns the resolution needed for the given window
 	 */
-	int2 RDevice::GetWindowResolution(WindowHandle hWnd)
+	RInt2 RDevice::GetWindowResolution(WindowHandle hWnd)
 	{
 		return GetWindowResolutionAPI(hWnd);
 	}

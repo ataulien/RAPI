@@ -126,7 +126,7 @@ bool RD3D11Texture::CreateTextureAPI(const void* textureData,
 * Creates this texture directly from an API-Resource
 */
 bool RD3D11Texture::CreateDirect(ID3D11Texture2D * texture,
-								 int2 resolution,
+								 RInt2 resolution,
 								 unsigned int numMipLevels,
 								 ETextureFormat textureFormat,
 								 EBindFlags bindFlags,

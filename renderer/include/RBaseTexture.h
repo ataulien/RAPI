@@ -28,9 +28,9 @@ namespace RAPI
 		/**
           * Returns the size of the texture in bytes
           */
-		static uint32_t ComputeSizeInBytes(int mip, const int2 &resolution, ETextureFormat format);
+		static uint32_t ComputeSizeInBytes(int mip, const RInt2 &resolution, ETextureFormat format);
 
-		static uint32_t ComputeRowPitchBytes(int mip, const int2 &resolution, ETextureFormat format);
+		static uint32_t ComputeRowPitchBytes(int mip, const RInt2 &resolution, ETextureFormat format);
 
 		/**
          * Getters
@@ -41,7 +41,7 @@ namespace RAPI
 		uint32_t GetSizeInBytes()
 		{ return SizeInBytes; }
 
-		int2 GetResolution()
+		RInt2 GetResolution()
 		{ return Resolution; }
 
 		uint32_t GetNumMipLevels()
@@ -64,7 +64,7 @@ namespace RAPI
 		bool IsDynamic;
 
 		// Size of the textures highest miplevel in pixels
-		int2 Resolution;
+		RInt2 Resolution;
 
 		// Number if mip-levels we have
 		uint32_t NumMipLevels;

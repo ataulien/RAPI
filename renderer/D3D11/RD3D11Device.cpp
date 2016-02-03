@@ -39,6 +39,7 @@ RD3D11Device::RD3D11Device()
 	ImmediateContext = nullptr;
 	DXGISwapChain = nullptr;
 	DepthStencilBuffer = nullptr;
+	Backbuffer = nullptr;
 }
 
 
@@ -438,7 +439,7 @@ bool RD3D11Device::BindPipelineState(const RPipelineState& state, const RStateMa
 		context->RSSetState(fs.RasterizerState->GetState());
 
 	if(changes.BlendState && fs.BlendState)
-		context->OMSetBlendState(fs.BlendState->GetState(), (float *)&float4(0.0f,0.0f,0.0f,0.0f), 0xFFFFFFFF);
+		context->OMSetBlendState(fs.BlendState->GetState(), (float *)&RFloat4(0.0f,0.0f,0.0f,0.0f), 0xFFFFFFFF);
 
 	if(changes.DepthStencilState && fs.DepthStencilState)
 		context->OMSetDepthStencilState(fs.DepthStencilState->GetState(), 0);
@@ -617,12 +618,12 @@ bool RD3D11Device::GetDisplayModeListAPI(std::vector<DisplayModeInfo>& modeList,
 /**
 * Returns the resolution needed for the given window
 */
-int2 RD3D11Device::GetWindowResolutionAPI(WindowHandle hWnd)
+RInt2 RD3D11Device::GetWindowResolutionAPI(WindowHandle hWnd)
 {
     RECT r;
     GetClientRect(OutputWindow, &r);
 
-    return int2(r.right - r.left, r.bottom - r.top);
+    return RInt2(r.right - r.left, r.bottom - r.top);
 }
 
 #endif

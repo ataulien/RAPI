@@ -71,7 +71,7 @@ namespace RAPI
 		/**
 		* Returns the resolution needed for the given window
 		*/
-		int2 GetWindowResolutionAPI(WindowHandle hWnd);
+		RInt2 GetWindowResolutionAPI(WindowHandle hWnd);
 
 		/**
         * Prepares the renderingcontext on the given thread for drawing

@@ -37,7 +37,7 @@ unsigned int GetDDSRowPitchSize(unsigned int width, bool dxt1)
 		return std::max((unsigned int)1, ((width+3)/4)) * 16;
 }
 
-uint32_t RBaseTexture::ComputeSizeInBytes(int mip, const int2 & resolution, ETextureFormat format)
+uint32_t RBaseTexture::ComputeSizeInBytes(int mip, const RInt2 & resolution, ETextureFormat format)
 {
 	EFormat f = (EFormat)format;
 	int px = (int)std::max(1.0f, (float)floor(resolution.x / pow(2.0f, mip)));
@@ -56,7 +56,7 @@ uint32_t RBaseTexture::ComputeSizeInBytes(int mip, const int2 & resolution, ETex
 	}
 }
 
-uint32_t RBaseTexture::ComputeRowPitchBytes(int mip, const int2 & resolution, ETextureFormat format)
+uint32_t RBaseTexture::ComputeRowPitchBytes(int mip, const RInt2 & resolution, ETextureFormat format)
 {
 	EFormat f = (EFormat)format;
 	int px = (int)std::max(1.0f, (float)floor(resolution.x / pow(2.0f, mip)));

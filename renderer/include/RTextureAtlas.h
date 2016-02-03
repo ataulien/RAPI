@@ -20,14 +20,14 @@ namespace RAPI
 		void StoreTexture(byte *data, size_t dataSize, void *userptr);
 
 		/** Constructs the textureatlas out of all the given textures */
-		bool Construct(int2 singleTextureDimensions);
+		bool Construct(RInt2 singleTextureDimensions);
 
 		/** Returns the atlas' texture object */
 		RTexture *GetTexture()
 		{ return Atlas; }
 
 		/** Returns the modified UVs for the given texture */
-		const std::pair<float2, float2> &GetModifiedUV(void *userptr)
+		const std::pair<RFloat2, RFloat2> &GetModifiedUV(void *userptr)
 		{ return TextureUVs[userptr]; }
 
 	private:
@@ -36,7 +36,7 @@ namespace RAPI
 		std::map<void *, std::vector<RDWORD>> StoredTextures;
 
 		// Min/Max UVs for all registered textures
-		std::map<void *, std::pair<float2, float2>> TextureUVs;
+		std::map<void *, std::pair<RFloat2, RFloat2>> TextureUVs;
 
 		// Constructed atlas
 		RTexture *Atlas;

@@ -5,7 +5,7 @@
 
 #include "RTimer.h"
 #include <map>
-#include "Logger.h"
+//#include "Logger.h"
 #include <assert.h>
 #include "RTools.h"
 
@@ -28,6 +28,7 @@ namespace RAPI
 			{
 				Query(ID3D11Device* device)
 				{
+#if 0
 					HRESULT hr;
 					D3D11_QUERY_DESC desc;
 					desc.Query = D3D11_QUERY_TIMESTAMP_DISJOINT;
@@ -41,7 +42,7 @@ namespace RAPI
 					LE(device->CreateQuery(&desc, &pTimestampAfter));
 
 					CPUElapsed = 0.0;
-
+#endif
 					//SetHardwareBreakpoint(GetCurrentThread(), 
 					//	HWBRK_TYPE_WRITE,HWBRK_SIZE_1,(*(void **)Disjoint));
 				}

@@ -28,7 +28,7 @@ namespace RAPI
 		 */
 		bool CreateTexture(const void *textureData,
 						   uint32_t sizeInBytes,
-						   int2 resolution,
+						   RInt2 resolution,
 						   unsigned int numMipLevels = 10,
 						   ETextureFormat textureFormat = ETextureFormat::TF_R8G8B8A8,
 						   EBindFlags bindFlags = EBindFlags::B_SHADER_RESOURCE,

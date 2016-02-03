@@ -16,12 +16,12 @@ namespace RAPI
 		XR_INVALID_ARG,
 	};
 
-	struct float2
+	struct RFloat2
 	{
-		float2()
+		RFloat2()
 		{ }
 
-		float2(float x, float y)
+		RFloat2(float x, float y)
 		{
 			this->x = x;
 			this->y = y;
@@ -31,12 +31,12 @@ namespace RAPI
 		float y;
 	};
 
-	struct float3
+	struct RFloat3
 	{
-		float3()
+		RFloat3()
 		{ }
 
-		float3(float x, float y, float z)
+		RFloat3(float x, float y, float z)
 		{
 			this->x = x;
 			this->y = y;
@@ -48,12 +48,12 @@ namespace RAPI
 		float z;
 	};
 
-	struct float4
+	struct RFloat4
 	{
-		float4()
+		RFloat4()
 		{ }
 
-		float4(float x, float y, float z, float w)
+		RFloat4(float x, float y, float z, float w)
 		{
 			this->x = x;
 			this->y = y;
@@ -67,27 +67,27 @@ namespace RAPI
 		float w;
 	};
 
-	// Simple 4x4 matrix
-	struct Matrix
+	// Simple 4x4 RMatrix
+	struct RMatrix
 	{
 		float m[16];
 	};
 
-	struct int2
+	struct RInt2
 	{
-		int2(int x, int y)
+		RInt2(int x, int y)
 		{
 			this->x = x;
 			this->y = y;
 		}
 
-		int2(const float2 &v)
+		RInt2(const RFloat2 &v)
 		{
 			this->x = (int) (v.x + 0.5f);
 			this->y = (int) (v.y + 0.5f);
 		}
 
-		int2()
+		RInt2()
 		{ }
 
 		std::string toString()
@@ -95,12 +95,12 @@ namespace RAPI
 			return "(" + std::to_string(x) + ", " + std::to_string(y) + ")";
 		}
 
-		bool operator==(const int2 &v)
+		bool operator==(const RInt2 &v)
 		{
 			return x == v.x && y == v.y;
 		}
 
-		bool operator!=(const int2 &v)
+		bool operator!=(const RInt2 &v)
 		{
 			return x != v.x || y != v.y;
 		}
@@ -110,9 +110,9 @@ namespace RAPI
 	};
 
 
-	struct INT4
+	struct RInt4
 	{
-		INT4(int x, int y, int z, int w)
+		RInt4(int x, int y, int z, int w)
 		{
 			this->x = x;
 			this->y = y;
@@ -120,7 +120,7 @@ namespace RAPI
 			this->w = w;
 		}
 
-		INT4()
+		RInt4()
 		{ }
 
 		int x;

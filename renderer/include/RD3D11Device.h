@@ -74,7 +74,7 @@ namespace RAPI
         /**
          * Returns the resolution needed for the given window
          */
-		int2 GetWindowResolutionAPI(WindowHandle hWnd);
+		RInt2 GetWindowResolutionAPI(WindowHandle hWnd);
 
 		/**
          * Getters

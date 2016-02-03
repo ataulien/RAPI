@@ -4,7 +4,6 @@
 #include "pch.h"
 #include "Types.h"
 #include "RResource.h"
-#include "Logger.h"
 
 namespace RAPI
 {
@@ -19,9 +18,6 @@ namespace RAPI
 
 		~RPipelineState()
 		{
-			// TODO: These stay locked on shutdown
-			if (Locked)
-				LogWarn() << "Locked Pipeline-state deleted!";
 		}
 
 		// Draw order of the objects
