@@ -1,7 +1,12 @@
 #include "pch.h"
 #include "RGLPixelShader.h"
 
-namespace RAPI
-{
+using namespace RAPI;
 
+/**
+* Loads the given shader
+*/
+bool RGLPixelShader::LoadShaderAPI()
+{
+	return CompileShaderAPI(EShaderType::ST_PIXEL);
 }

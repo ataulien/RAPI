@@ -44,10 +44,23 @@ namespace RAPI
 		/**
 		 * Updates the VAO-Info of this buffer, if this is used as a vertexbuffer 
 		 */
-		void UpdateVAO(RInputLayout* inputLayout);
+		void UpdateVAO(const RInputLayout* inputLayout);
+
+		/**
+		* Returns the vertex array object 
+		*/
+		GLuint GetVertexArrayObjectAPI(){return VertexArrayObject;}
+
+		/**
+		* Returns the vertex array object 
+		*/
+		GLuint GetVertexBufferObjectAPI(){return VertexBufferObject;}
 	private:
 		// The created VBO
 		GLuint VertexBufferObject;
+
+		// The used VAO
+		GLuint VertexArrayObject;
     };
 }
 

@@ -12,7 +12,7 @@ namespace RAPI
 		virtual ~RBaseShader();
 
 	protected:
-		// Path to the shaderfile this holds
+		// Path to the shaderfile this holds or sourcecode, if this was loaded from memory
 		std::string ShaderFile;
 
 		// Vector of different #defines for the shaders

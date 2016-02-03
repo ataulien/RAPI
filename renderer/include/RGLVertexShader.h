@@ -10,8 +10,7 @@ namespace RAPI
 		/**
 		* Loads the given shader
 		*/
-		bool LoadShaderAPI(){return true;}
-
+		bool LoadShaderAPI();
 	};
 }
 #endif

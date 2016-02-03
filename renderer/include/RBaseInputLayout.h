@@ -20,9 +20,13 @@ namespace RAPI
 	{
 	public:
 		RBaseInputLayout();
-
 		virtual ~RBaseInputLayout();
 
+		/** Returns the number of elements in the InputElementDesc array */
+		unsigned int GetNumInputDescElements()const{return NumInputDescElements;}
+
+		/** Returns the pointer to the input element desc */
+		const INPUT_ELEMENT_DESC* GetInputElementDesc()const{return InputElementDesc;}
 	protected:
 		// Descriptor for the input layout
 		INPUT_ELEMENT_DESC *InputElementDesc;

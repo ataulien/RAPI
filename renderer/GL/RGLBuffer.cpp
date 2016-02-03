@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "RGLBuffer.h"
 #include "Logger.h"
+#include "RInputLayout.h"
 
 using namespace RAPI;
 
 RAPI::RGLBuffer::RGLBuffer()
 {
 	VertexBufferObject = 0;
+	VertexArrayObject = 0;
 }
 
 RAPI::RGLBuffer::~RGLBuffer()
@@ -111,5 +113,53 @@ void RGLBuffer::DeallocateAPI()
 */
 void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 {
+	// Get input element desc
+	const INPUT_ELEMENT_DESC* desc = inputLayout->GetInputElementDesc();
 
+	// Already initialized?
+	if(VertexArrayObject || BindFlags != GL_ARRAY_BUFFER)
+		return;
+
+	// Create VAO
+	glGenVertexArrays(1, &VertexArrayObject);
+	CheckGlError();
+
+	glBindVertexArray(VertexArrayObject);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObject);
+
+	for(int i = 0; i < inputLayout->GetNumInputDescElements(); i++)
+	{
+		const INPUT_ELEMENT_DESC& d = desc[i];
+		
+		glEnableVertexAttribArray(d.InputSlot);
+		CheckGlError();
+
+		// Unpack the formats
+		switch(d.Format)
+		{
+		case FORMAT_R32G32B32A32_FLOAT:
+			glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+			break;
+
+		case FORMAT_R32G32B32_FLOAT:
+			glVertexAttribPointer(i, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+			break;
+
+		case FORMAT_R32G32_FLOAT:
+			glVertexAttribPointer(i, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+			break;
+
+		case FORMAT_R8G8B8A8_UNORM:
+			glVertexAttribPointer(i, 4, GL_UNSIGNED_BYTE, GL_FALSE, 0, nullptr);
+			break;
+
+		default:
+			LogWarnBox() << "Unknown INPUT_ELEMENT_DESC-Format: " << d.Format;
+			return;
+		}
+
+		CheckGlError();
+		
+	}
 }

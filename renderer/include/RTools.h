@@ -175,6 +175,25 @@ namespace RAPI
 			return hash;
 		}
 
+		/** Hashes the data of the given vector */
+		template<typename T> size_t HashVector(const std::vector<T>& objects)
+		{
+			byte* data = (byte *)&objects[0];
+			size_t hash = 0;
+			for(int i=0;i<sizeof(T) * objects.size();i+=4)
+			{
+				RDWORD d;
+				((char *)&d)[0] = data[i];
+				((char *)&d)[1] = data[i+1];
+				((char *)&d)[2] = data[i+2];
+				((char *)&d)[3] = data[i+3];
+
+				hash_combine(hash, d);
+			}
+
+			return hash;
+		}
+
 		/** Reloads all shaders */
 		static void ReloadShaders()
 		{

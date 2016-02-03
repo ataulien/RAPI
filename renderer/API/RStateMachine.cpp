@@ -232,7 +232,7 @@ namespace RAPI
 		RPipelineState::EDrawOrder d = RPipelineState::DO_OPAQUE;
 
 		// Check for blending
-		if (State.BlendState->GetStateInfo().BlendEnabled) {
+		if (State.BlendState && State.BlendState->GetStateInfo().BlendEnabled) {
 			// Check for type
 			switch (State.BlendState->GetStateInfo().BlendTypeHint) {
 				case RBlendStateInfo::BTH_ADDITIVE:

@@ -174,6 +174,16 @@ namespace RAPI
 
 
 #ifdef RND_D3D11
+	enum EShaderType
+	{
+		ST_VERTEX,
+		ST_PIXEL,
+		ST_GEOMETRY,
+		ST_HULL,
+		ST_DOMAIN,
+		ST_NUM_SHADER_TYPES
+	};
+
 	/** Layed out for D3D11*/
 	enum EBindFlags
 	{
@@ -204,6 +214,17 @@ namespace RAPI
 		U_IMMUTABLE = 1
 	};
 #elif defined(RND_GL)
+	/** Layed out for openGL*/
+	enum EShaderType
+	{
+		ST_VERTEX = GL_VERTEX_SHADER,
+		ST_PIXEL = GL_FRAGMENT_SHADER,
+		ST_GEOMETRY = GL_GEOMETRY_SHADER,
+		ST_HULL = GL_TESS_CONTROL_SHADER,
+		ST_DOMAIN = GL_TESS_EVALUATION_SHADER,
+		ST_NUM_SHADER_TYPES
+	};
+
 	/** Layed out for openGL*/
 	enum EBindFlags
 	{
@@ -435,15 +456,6 @@ namespace RAPI
 		TA_MIRROR_ONCE = 5
 	};
 
-	enum EShaderType
-	{
-		ST_VERTEX,
-		ST_PIXEL,
-		ST_GEOMETRY,
-		ST_HULL,
-		ST_DOMAIN,
-		ST_NUM_SHADER_TYPES
-	};
 
 // Values for D3D11. // Hint: #ifdef this to match your own rendering API if you want
 	enum EPrimitiveType

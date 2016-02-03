@@ -79,6 +79,12 @@ namespace RAPI
 		bool PrepareContextAPI(unsigned int threadId);
 
 	private:
+
+		/**
+		* Binds the resources of the given pipeline state
+		*/
+		bool BindPipelineState(const RPipelineState& state, const RStateMachine::ChangesStruct& changes, RStateMachine& stateMachine);
+
 		// Current contexts
 		void* DeviceContext;
 		void* RenderContext;
