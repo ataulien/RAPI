@@ -172,25 +172,9 @@ namespace RAPI
 		CA_READ = 0x20000L,
 	};
 
-/** Layed out for D3D11*/
-	enum EUsageFlags
-	{
-		U_DEFAULT = 0,
-		U_STAGING = 3,
-		U_DYNAMIC = 2,
-		U_IMMUTABLE = 1
-	};
 
-/** Layed out for D3D11*/
-	enum EMapFlags
-	{
-		M_READ = 1,
-		M_WRITE = 2,
-		M_READ_WRITE = 3,
-		M_WRITE_DISCARD = 4,
-	};
-
-/** Layed out for D3D11*/
+#ifdef RND_D3D11
+	/** Layed out for D3D11*/
 	enum EBindFlags
 	{
 		B_VERTEXBUFFER = 0x1,
@@ -201,6 +185,82 @@ namespace RAPI
 		B_CONSTANTBUFFER = 0x4,
 		B_DEPTHSTENCIL = 0x40,
 	};
+
+	/** Layed out for D3D11*/
+	enum EMapFlags
+	{
+		M_READ = 1,
+		M_WRITE = 2,
+		M_READ_WRITE = 3,
+		M_WRITE_DISCARD = 4,
+	};
+
+	/** Layed out for D3D11*/
+	enum EUsageFlags
+	{
+		U_DEFAULT = 0,
+		U_STAGING = 3,
+		U_DYNAMIC = 2,
+		U_IMMUTABLE = 1
+	};
+#elif defined(RND_GL)
+	/** Layed out for openGL*/
+	enum EBindFlags
+	{
+		B_VERTEXBUFFER = GL_ARRAY_BUFFER,
+		B_INDEXBUFFER = GL_ELEMENT_ARRAY_BUFFER,
+		//B_STREAM_OUT = 0x10,
+		B_SHADER_RESOURCE = GL_SHADER_STORAGE_BUFFER,
+		//B_RENDERTARGET = 0x20,
+		B_CONSTANTBUFFER = GL_UNIFORM_BUFFER,
+		//B_DEPTHSTENCIL = 0x40,
+	};
+
+	/** Layed out for openGL*/
+	enum EMapFlags
+	{
+		M_READ = GL_READ_BUFFER,
+		M_WRITE = GL_WRITE_ONLY,
+		M_READ_WRITE = GL_READ_WRITE,
+		M_WRITE_DISCARD = GL_WRITE_ONLY,
+	};
+
+	/** Layed out for openGL*/
+	enum EUsageFlags
+	{
+		U_DEFAULT = GL_STATIC_DRAW,
+		U_STAGING = GL_STATIC_READ,
+		U_DYNAMIC = GL_DYNAMIC_DRAW,
+		U_IMMUTABLE = GL_STATIC_DRAW
+	};
+#else
+	enum EBindFlags
+	{
+		B_VERTEXBUFFER,
+		B_INDEXBUFFER,
+		B_STREAM_OUT,
+		B_SHADER_RESOURCE,
+		B_RENDERTARGET,
+		B_CONSTANTBUFFER,
+		B_DEPTHSTENCIL,
+	};
+
+	enum EMapFlags
+	{
+		M_READ,
+		M_WRITE,
+		M_READ_WRITE,
+		M_WRITE_DISCARD,
+	};
+
+	enum EUsageFlags
+	{
+		U_DEFAULT,
+		U_STAGING,
+		U_DYNAMIC,
+		U_IMMUTABLE
+	};
+#endif
 
 /** Layed out for DXGI */
 	enum ETextureFormat

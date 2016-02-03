@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "RGLDevice.h"
-
+#include "Logger.h"
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #ifdef RND_GL
 
@@ -14,66 +15,14 @@ bool RGLDevice::CreateDeviceAPI()
 
 bool RGLDevice::SetWindowAPI()
 {
-#ifdef WIN32
-    // FIXME: Cast
-    HDC deviceContext = GetDC(static_cast<HWND>(OutputWindow));
-    DeviceContext = static_cast<void*>(deviceContext);
-    HGLRC renderContext;
-
-
-    static PIXELFORMATDESCRIPTOR pfd = {
-            sizeof(PIXELFORMATDESCRIPTOR),  // Size Of This Pixel Format Descriptor
-            1,                                // Version Number
-            PFD_DRAW_TO_WINDOW |            // Format Must Support Window
-            PFD_SUPPORT_OPENGL |            // Format Must Support OpenGL
-            PFD_DOUBLEBUFFER,                // Must Support Double Buffering
-            PFD_TYPE_RGBA,                    // Request An RGBA Format
-            32,                                // Select Our Color Depth
-            0, 0, 0, 0, 0, 0,                // Color Bits Ignored
-            0,                                // No Alpha Buffer
-            0,                                // Shift Bit Ignored
-            0,                                // No Accumulation Buffer
-            0, 0, 0, 0,                        // Accumulation Bits Ignored
-            16,                                // 16Bit Z-Buffer (Depth Buffer)
-            0,                                // No Stencil Buffer
-            0,                                // No Auxiliary Buffer
-            PFD_MAIN_PLANE,                    // Main Drawing Layer
-            0,                                // Reserved
-            0, 0, 0                            // Layer Masks Ignored
-    };
-
-    int32_t pixelformat = 0;
-    if (!(pixelformat = ChoosePixelFormat(deviceContext, &pfd)))
-    {
-        MessageBoxA(NULL, "Could not find suitable pixel format.", "Error!", MB_OK | MB_ICONERROR);
-        return 1;
-    }
-
-    if (!SetPixelFormat(deviceContext, pixelformat, &pfd))
-    {
-        MessageBoxA(NULL, "Could not find set pixel format.", "Error!", MB_OK | MB_ICONERROR);
-        return 1;
-    }
-
-    if (!(renderContext = wglCreateContext(deviceContext)))
-    {
-        MessageBoxA(NULL, "Could not create OpenGL context.", "Error!", MB_OK | MB_ICONERROR);
-        return 1;
-    }
-    RenderContext = static_cast<void*>(renderContext);
-
-    if (!wglMakeCurrent(deviceContext, renderContext))
-    {
-        MessageBoxA(NULL, "Could not activate render context.", "Error!", MB_OK | MB_ICONERROR);
-        return 1;
-    }
+	// Make the window's context current
+	glfwMakeContextCurrent(OutputWindow);
 
     // Init first viewport
     RInt2 windowSize = GetWindowResolutionAPI(OutputWindow);
     glViewport(0, 0, windowSize.x, windowSize.y);
 
     glClearColor(0.0f, 0.5f, 0.5f,0.0f);
-#endif
 
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
@@ -107,9 +56,7 @@ bool RGLDevice::OnFrameEndAPI()
 
 bool RGLDevice::PresentAPI()
 {
-#ifdef WIN32
-    SwapBuffers(static_cast<HDC>(DeviceContext));
-#endif
+	glfwSwapBuffers(OutputWindow);
     return true;
 }
 
@@ -149,13 +96,9 @@ bool RGLDevice::GetDisplayModeListAPI(std::vector<DisplayModeInfo> &modeList, bo
  */
 RInt2 RGLDevice::GetWindowResolutionAPI(WindowHandle hWnd)
 {
-#ifdef WIN32
-    RECT r;
-    GetClientRect(static_cast<HWND>(hWnd), &r);
-    return RInt2(r.right-r.left, r.bottom-r.top);
-#else
-    // FIXME
-    return RInt2(800,600);
-#endif
+	RInt2 s;
+	glfwGetFramebufferSize(hWnd, &s.x, &s.y);
+
+    return s;
 }
 #endif

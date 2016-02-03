@@ -102,8 +102,16 @@ include_directories("renderer/utils")
 include_directories("renderer/D3D11")
 include_directories("renderer/GL")
 include_directories("renderer/include")
+
+if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
 link_directories("lib/glew/x64")
-SET( GLEW_LIBRARIES "glew32" "glu32")
+link_directories("lib/glfw/x64")
+else()
+link_directories("lib/glew/Win32")
+link_directories("lib/glfw/Win32")
+endif()
+
+SET( GLEW_LIBRARIES "glew32" "glu32" "glfw3")
 
 
 ELSE()
@@ -116,7 +124,7 @@ include_directories("./renderer/utils")
 include_directories("./renderer/D3D11")
 include_directories("./renderer/GL")
 include_directories("./renderer/include")
-SET( GLEW_LIBRARIES "GLEW" "GLU")
+SET( GLEW_LIBRARIES "GLEW" "GLU" "GLFW3")
 ENDIF()
 
 include_directories("include")

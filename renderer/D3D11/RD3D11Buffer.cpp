@@ -133,7 +133,7 @@ bool RD3D11Buffer::UpdateDataAPI(void* data, size_t dataSize)
 {
 	if(dataSize != 0 && dataSize > GetSizeInBytes())
 	{
-		// Buffer to small for requested size, resize.
+		// Buffer too small for requested size, resize.
 		DeallocateAPI();
 
 		// Just set the new size and keep the old settings

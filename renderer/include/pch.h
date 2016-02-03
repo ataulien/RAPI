@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef WIN32
-#define RND_D3D11
+#define RND_GL
 #else
 #define RND_GL
 #endif
@@ -16,13 +16,20 @@
 #include <D3DX11.h>
 #include <D3DX11tex.h>
 #pragma warning( default : 4005 )
+#elif defined(RND_GL)
+#include <GL/glew.h>
 #endif
 
 #ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+#endif
 
+#ifdef RND_D3D11
 typedef HWND WindowHandle;
+#elif defined(RND_GL)
+struct GLFWwindow;
+typedef GLFWwindow* WindowHandle;
 #else
 typedef void* WindowHandle;
 #endif
