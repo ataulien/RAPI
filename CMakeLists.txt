@@ -124,7 +124,7 @@ include_directories("./renderer/utils")
 include_directories("./renderer/D3D11")
 include_directories("./renderer/GL")
 include_directories("./renderer/include")
-SET( GLEW_LIBRARIES "GLEW" "GLU" "GLFW3")
+#SET( GLEW_LIBRARIES "GLEW" "GLU" "glfw3")
 ENDIF()
 
 include_directories("include")
@@ -139,7 +139,20 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "lib")
 IF( WIN32 )
 add_executable(RAPI_EXE WIN32 ${SOURCE_FILES})
 target_link_libraries(RAPI_EXE ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIES})
+else()
+    find_package(GLEW)
+    if(!GLEW_FOUND)
+        message(FATAL_ERROR "Glew not found")
+    endif()
+    include_directories(${GLEW_INCLUDE_DIRS})
+    find_package(PkgConfig REQUIRED)
+    pkg_search_module(GLFW REQUIRED glfw3)
+    message( ${GLEW_INCLUDE_DIRS})
+    include_directories(${GLFW_INCLUDE_DIRS})
+    add_executable(rapi_test ${SOURCE_FILES})
+    target_link_libraries(rapi_test ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLFW_STATIC_LIBRARIES})
 ENDIF()
+
 
 add_library(RAPI ${SOURCE_FILES})
 
@@ -148,4 +161,3 @@ target_link_libraries(RAPI ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIE
 set_target_properties(RAPI PROPERTIES
     COMPILE_PDB_NAME "RAPI"
     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
-
