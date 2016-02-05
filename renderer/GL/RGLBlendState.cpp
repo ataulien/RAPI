@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "RGLBlendState.h"
 
-namespace RAPI
-{
+#ifdef RND_GL
+using namespace RAPI;
 
-}
+#endif

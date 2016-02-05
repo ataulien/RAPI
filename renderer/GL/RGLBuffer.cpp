@@ -5,6 +5,8 @@
 
 using namespace RAPI;
 
+#ifdef RND_GL
+
 RAPI::RGLBuffer::RGLBuffer()
 {
 	VertexBufferObject = 0;
@@ -163,3 +165,4 @@ void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 		
 	}
 }
+#endif

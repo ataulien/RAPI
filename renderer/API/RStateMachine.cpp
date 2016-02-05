@@ -25,6 +25,9 @@ namespace RAPI
 		memset(&ChangesCount, 0, sizeof(ChangesCount));
 
 		Invalidate();
+
+		// This can actually crash the nvidia driver if not set correctly
+		State.BoundIDs.PrimitiveType = EPrimitiveType::PT_TRIANGLE_LIST;
 	}
 
 

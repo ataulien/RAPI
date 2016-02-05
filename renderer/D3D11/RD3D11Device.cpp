@@ -27,7 +27,7 @@ using namespace RAPI;
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
-//#define DEBUG_D3D11
+#define DEBUG_D3D11
 
 const ETextureFormat DEFAULT_BACKBUFFER_FORMAT = ETextureFormat::TF_R8G8B8A8;
 
@@ -227,7 +227,7 @@ bool RD3D11Device::PrepareContextAPI(unsigned int threadId)
 	vp.Height = (float)OutputResolution.y;
 	vp.Width = (float)OutputResolution.x;
 	vp.MaxDepth = 1.0f;
-	vp.MinDepth = 1.0f;
+	vp.MinDepth = 0.0f;
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
 	ctx->RSSetViewports(1, &vp);

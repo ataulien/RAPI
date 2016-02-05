@@ -5,6 +5,7 @@ find_package(OpenGL REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 IF( WIN32 )
+	
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /DEBUG")
 	SET( PSDK_PATH "C:/Program Files/Microsoft Platform SDK/Bin" )
 	SET( PSDK_INC "C:/Program Files/Microsoft Platform SDK/Include" )
@@ -104,14 +105,15 @@ include_directories("renderer/GL")
 include_directories("renderer/include")
 
 if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-link_directories("lib/glew/x64")
-link_directories("lib/glfw/x64")
+set(GLFW_LIB_DIR "lib/glfw/x64")
 else()
-link_directories("lib/glew/Win32")
-link_directories("lib/glfw/Win32")
+set(GLFW_LIB_DIR "lib/glfw/Win32")
 endif()
 
-SET( GLEW_LIBRARIES "glew32" "glu32" "glfw3")
+link_directories(${GLFW_LIB_DIR})
+link_directories(lib/glew/lib)
+
+SET( GLEW_LIBRARIES glew glu32 glfw3)
 
 
 ELSE()
@@ -129,6 +131,7 @@ ENDIF()
 
 include_directories("include")
 
+add_subdirectory(lib/glew)
 
 add_definitions(-DNOMINMAX -D_CRT_SECURE_NO_WARNINGS)
 
@@ -154,10 +157,44 @@ else()
 ENDIF()
 
 
-add_library(RAPI ${SOURCE_FILES})
 
-target_link_libraries(RAPI ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIES})
+add_library(RAPI_SMALL STATIC ${SOURCE_FILES})
 
-set_target_properties(RAPI PROPERTIES
+set_target_properties(RAPI_SMALL PROPERTIES
     COMPILE_PDB_NAME "RAPI"
     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
+
+target_link_libraries(RAPI_SMALL ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIES})
+TARGET_LINK_LIBRARIES(RAPI_SMALL LINK_INTERFACE_LIBRARIES)
+if(MSVC)
+	#FILE(WRITE dummy.c "void main(){}")
+    #
+	#set(EXT_LIB ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLFW_STATIC_LIBRARIES}) 
+	#set(BIG_LIB test)
+	#add_library (project2 dummy.c)
+	#get_property(PROJ2_LOC TARGET project2 PROPERTY LOCATION_<CONFIG>)
+
+	#add_custom_command(OUTPUT ${BIG_LIB} 
+	#				   DEPENDS project2
+	#				   COMMAND "lib.exe /OUT:${BIG_LIB} ${EXT_LIB} $<TARGET_FILE:project2>" )
+	
+	#add_custom_target(tgt DEPENDS RAPI_SMALL COMMAND "${BIG_LIB} ${EXT_LIB} $<TARGET_FILE:project2>")
+	#add_custom_target(tgt DEPENDS RAPI_SMALL COMMAND lib.exe /OUT:$<TARGET_PATH:RAPI_SMALL> ${CMAKE_SOURCE_DIR}/${GLFW_LIB_DIR}/glfw3.lib ${CMAKE_SOURCE_DIR}/${GLEW_LIB_DIR}/glew32.lib $<TARGET_FILE:project2> $<TARGET_FILE:RAPI_SMALL>)
+
+endif()
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -3,7 +3,9 @@
 #include "Logger.h"
 #include "RTools.h"
 
+#ifdef RND_GL
 using namespace RAPI;
+
 
 RAPI::RGLShader::RGLShader()
 {
@@ -151,3 +153,4 @@ GLuint RGLShader::LinkShaderObjectAPI(const std::vector<RGLShader*>& shaders)
 
 	return program;
 }
+#endif

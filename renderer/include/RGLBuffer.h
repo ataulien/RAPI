@@ -54,7 +54,7 @@ namespace RAPI
 		/**
 		* Returns the vertex array object 
 		*/
-		GLuint GetVertexBufferObjectAPI(){return VertexBufferObject;}
+		GLuint GetBufferObjectAPI(){return VertexBufferObject;}
 	private:
 		// The created VBO
 		GLuint VertexBufferObject;

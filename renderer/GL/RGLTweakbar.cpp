@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "RGLTweakbar.h"
 
-namespace RAPI
-{
-
-}
+#ifdef RND_GL
+using namespace RAPI;
+#endif

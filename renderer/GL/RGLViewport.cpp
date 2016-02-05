@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "RGLViewport.h"
 
-namespace RAPI
-{
+#ifdef RND_GL
+using namespace RAPI;
 
-}
+#endif

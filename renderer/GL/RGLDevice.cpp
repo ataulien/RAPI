@@ -8,7 +8,6 @@
 #include "RVertexShader.h"
 
 #ifdef RND_GL
-
 using namespace RAPI;
 
 bool RGLDevice::CreateDeviceAPI()
@@ -46,6 +45,12 @@ bool RGLDevice::SetWindowAPI()
 	LogInfo() << "OpenGL version supported " << version;
 
 	CheckGlError();
+
+	if(!glewIsSupported("GL_ARB_explicit_uniform_location"))
+	{
+		LogError() << "GL_ARB_explicit_uniform_location not supported!";
+	}
+
 
     return true;
 }
@@ -88,7 +93,7 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 	stateMachine.SetFromPipelineState(&state, changes);
 	const RPipelineStateFull& fs = stateMachine.GetCurrentState();
 	std::vector<RGLShader*> shaders;
-
+	
 	//if(changes.PrimitiveType)
 	//	context->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)state.IDs.PrimitiveType);
 
@@ -116,7 +121,7 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 				// Need to update the VAO of this to get the vertexlayout into the buffer
 				fs.VertexBuffers[i]->UpdateVAO(fs.InputLayout);
 				glBindVertexArray(fs.VertexBuffers[i]->GetVertexArrayObjectAPI()); 
-				glBindBuffer(GL_ARRAY_BUFFER, fs.VertexBuffers[i]->GetVertexBufferObjectAPI());
+				glBindBuffer(GL_ARRAY_BUFFER, fs.VertexBuffers[i]->GetBufferObjectAPI());
 				CheckGlError();
 			}
 			else
@@ -133,10 +138,16 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 	//	context->IASetIndexBuffer(fs.IndexBuffer->GetBuffer(), 
 	//		fs.IndexBuffer->GetStructuredByteSize() == 2 ? DXGI_FORMAT_R16_UINT : DXGI_FORMAT_R32_UINT, 0);
 
-	if(changes.PixelShader && fs.PixelShader)
+	/*if(changes.PixelShader && fs.PixelShader)
 		shaders.push_back(fs.PixelShader);
 
 	if(changes.VertexShader && fs.VertexShader)
+		shaders.push_back(fs.VertexShader);*/
+
+	if(fs.PixelShader)
+		shaders.push_back(fs.PixelShader);
+
+	if(fs.VertexShader)
 		shaders.push_back(fs.VertexShader);
 
 	// Link shaders/get a program from cache
@@ -161,28 +172,52 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 	//}
 
 
-	//if(changes.ConstantBuffers[EShaderType::ST_VERTEX])
-	//{
-	//	for(unsigned int j=0;j<fs.ConstantBuffers[EShaderType::ST_VERTEX].size();j++)
-	//	{
-	//		if(fs.ConstantBuffers[EShaderType::ST_VERTEX][j])
-	//		{
-	//			context->VSSetConstantBuffers(j, 1, fs.ConstantBuffers[EShaderType::ST_VERTEX][j]->GetBufferPtr());
-	//		}
-	//	}
-	//}
+	if(changes.ConstantBuffers[EShaderType::ST_VERTEX])
+	{
+		for(unsigned int j=0;j<fs.ConstantBuffers[EShaderType::ST_VERTEX].size();j++)
+		{
+			if(fs.VertexShader && fs.ConstantBuffers[EShaderType::ST_VERTEX][j])
+			{
+				// TODO: Cache the call from LinkShaderObjectAPI above somewhere
+				GLuint program = shaders[0]->LinkShaderObjectAPI(shaders);
 
-	//if(changes.ConstantBuffers[EShaderType::ST_PIXEL])
-	//{
-	//	for(unsigned int j=0;j<fs.ConstantBuffers[EShaderType::ST_PIXEL].size();j++)
-	//	{
-	//		if(fs.ConstantBuffers[EShaderType::ST_PIXEL][j])
-	//		{
-	//			context->PSSetConstantBuffers(j, 1, fs.ConstantBuffers[EShaderType::ST_PIXEL][j]->GetBufferPtr());
-	//		}
-	//	}
-	//}
+				GLint numBlocks;
+				glGetProgramiv(program, GL_ACTIVE_UNIFORM_BLOCKS, &numBlocks);
 
+				GLuint ubo = fs.ConstantBuffers[EShaderType::ST_VERTEX][j]->GetBufferObjectAPI();
+				glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+
+				GLuint index = j;
+
+				// TODO: Check if we reach the limit of GL_MAX_UNIFORM_BUFFER_BINDINGS
+				GLuint binding_point_index = program; // indicated by yourself and less than GL_MAX_UNIFORM_BUFFER_BINDINGS
+				glUniformBlockBinding(program, index, binding_point_index);
+
+				
+				glBindBufferBase(GL_UNIFORM_BUFFER, binding_point_index, ubo);
+				CheckGlError();
+			}
+		}
+	}
+
+	/*if(changes.ConstantBuffers[EShaderType::ST_PIXEL])
+	{
+		for(unsigned int j=0;j<fs.ConstantBuffers[EShaderType::ST_PIXEL].size();j++)
+		{
+			if(fs.PixelShader && fs.ConstantBuffers[EShaderType::ST_PIXEL][j])
+			{
+				// TODO: Cache the call from LinkShaderObjectAPI above somewhere
+				GLuint ubo = fs.ConstantBuffers[EShaderType::ST_PIXEL][j]->GetBufferObjectAPI();
+				glBindBuffer(GL_UNIFORM_BUFFER, ubo);
+				glBindBufferBase( GL_UNIFORM_BUFFER, j, ubo );
+				// TODO: Cache the call from LinkShaderObjectAPI above somewhere
+				//glBindBuffer(GL_UNIFORM_BUFFER, fs.ConstantBuffers[EShaderType::ST_PIXEL][j]->GetBufferObjectAPI());
+				//glUniformBlockBinding(fs.VertexShader->LinkShaderObjectAPI(shaders), j, 0);
+				//CheckGlError();
+			}
+		}
+	}
+	*/
 	//if(changes.StructuredBuffers[EShaderType::ST_VERTEX])
 	//{
 	//	for(unsigned int j=0;j<fs.StructuredBuffers[EShaderType::ST_VERTEX].size();j++)
