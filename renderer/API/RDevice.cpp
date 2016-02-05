@@ -55,6 +55,10 @@ namespace RAPI
 	{
 		OutputWindow = hWnd;
 
+		// Get resolution
+		OutputResolution = GetWindowResolutionAPI(OutputWindow);
+		LogInfo() << "Resolution: " << OutputResolution.toString();
+
 		if (!SetWindowAPI())
 			return false;
 

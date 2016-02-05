@@ -126,10 +126,6 @@ bool RD3D11Device::InitDXGI()
 */
 bool RD3D11Device::SetWindowAPI()
 {
-	// Get resolution
-	OutputResolution = GetWindowResolutionAPI(OutputWindow);
-	LogInfo() << "Resolution: " << OutputResolution.toString();
-
 	// Create swapchain
 	CreateSwapChain(true);
 
