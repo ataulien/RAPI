@@ -1,8 +1,6 @@
 #pragma once
 
-#ifdef WIN32
-#define RND_GL
-#else
+#if !defined(RND_GL) && !defined(RND_D3D11)
 #define RND_GL
 #endif
 

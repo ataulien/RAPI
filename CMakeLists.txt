@@ -158,33 +158,25 @@ ENDIF()
 
 
 
-add_library(RAPI STATIC ${SOURCE_FILES})
+add_library(RAPI_GL STATIC ${SOURCE_FILES})
 
-set_target_properties(RAPI PROPERTIES
-    COMPILE_PDB_NAME "RAPI"
+set_target_properties(RAPI_GL PROPERTIES
+    COMPILE_PDB_NAME "RAPI_GL"
     COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 
-target_link_libraries(RAPI ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIES})
+target_link_libraries(RAPI_GL ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIES})
+target_compile_options(RAPI_GL PUBLIC -DRND_D3D11)
 
-if(MSVC)
-	#FILE(WRITE dummy.c "void main(){}")
-    #
-	#set(EXT_LIB ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLFW_STATIC_LIBRARIES}) 
-	#set(BIG_LIB test)
-	#add_library (project2 dummy.c)
-	#get_property(PROJ2_LOC TARGET project2 PROPERTY LOCATION_<CONFIG>)
+IF( WIN32 )
+	add_library(RAPI_DX STATIC ${SOURCE_FILES})
 
-	#add_custom_command(OUTPUT ${BIG_LIB} 
-	#				   DEPENDS project2
-	#				   COMMAND "lib.exe /OUT:${BIG_LIB} ${EXT_LIB} $<TARGET_FILE:project2>" )
-	
-	#add_custom_target(tgt DEPENDS RAPI_SMALL COMMAND "${BIG_LIB} ${EXT_LIB} $<TARGET_FILE:project2>")
-	#add_custom_target(tgt DEPENDS RAPI_SMALL COMMAND lib.exe /OUT:$<TARGET_PATH:RAPI_SMALL> ${CMAKE_SOURCE_DIR}/${GLFW_LIB_DIR}/glfw3.lib ${CMAKE_SOURCE_DIR}/${GLEW_LIB_DIR}/glew32.lib $<TARGET_FILE:project2> $<TARGET_FILE:RAPI_SMALL>)
+	set_target_properties(RAPI_DX PROPERTIES
+		COMPILE_PDB_NAME "RAPI_GL"
+		COMPILE_PDB_OUTPUT_DIRECTORY "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}")
 
+	target_link_libraries(RAPI_DX ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIES})
+	target_compile_options(RAPI_DX PUBLIC -DRND_D3D11)
 endif()
-
-
-	
 	
 	
 	
