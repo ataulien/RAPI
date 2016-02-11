@@ -18,6 +18,15 @@
 #include <pthread.h>
 #endif
 
+// TODO: Fix this properly
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+
 namespace RAPI
 {
 

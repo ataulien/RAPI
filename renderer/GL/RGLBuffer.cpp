@@ -144,33 +144,37 @@ void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 	CheckGlError();
 
 	glBindVertexArray(VertexArrayObject);
-	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObject);
 
+	size_t offset = 0;
 	for(unsigned int i = 0; i < inputLayout->GetNumInputDescElements(); i++)
 	{
 		const INPUT_ELEMENT_DESC& d = desc[i];
 		
-		glEnableVertexAttribArray(d.InputSlot);
+		glEnableVertexAttribArray(i);
 		CheckGlError();
 
 		// Unpack the formats
 		switch(d.Format)
 		{
 		case FORMAT_R32G32B32A32_FLOAT:
-			glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, 0, nullptr);
+			glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, StructuredByteSize, (void*)offset);
+			offset += sizeof(float) * 4;
 			break;
 
 		case FORMAT_R32G32B32_FLOAT:
-			glVertexAttribPointer(i, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+			glVertexAttribPointer(i, 3, GL_FLOAT, GL_FALSE, StructuredByteSize, (void*)offset);
+			offset += sizeof(float) * 3;
 			break;
 
 		case FORMAT_R32G32_FLOAT:
-			glVertexAttribPointer(i, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+			glVertexAttribPointer(i, 2, GL_FLOAT, GL_FALSE, StructuredByteSize, (void*)offset);
+			offset += sizeof(float) * 2;
 			break;
 
 		case FORMAT_R8G8B8A8_UNORM:
-			glVertexAttribPointer(i, 4, GL_UNSIGNED_BYTE, GL_FALSE, 0, nullptr);
+			glVertexAttribPointer(i, 4, GL_UNSIGNED_BYTE, GL_FALSE, StructuredByteSize, (void*)offset);
+			offset += sizeof(uint32_t);
 			break;
 
 		default:
