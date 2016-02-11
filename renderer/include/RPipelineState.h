@@ -5,6 +5,10 @@
 #include "Types.h"
 #include "RResource.h"
 
+#ifndef RAPI_MAX_NUM_SHADER_RESOURCES
+#define RAPI_MAX_NUM_SHADER_RESOURCES 4
+#endif
+
 namespace RAPI
 {
 
@@ -102,9 +106,9 @@ namespace RAPI
 		}
 
 		// Textures and constantbuffers
-		std::vector<class RBuffer *> StructuredBuffers[EShaderType::ST_NUM_SHADER_TYPES];
-		std::vector<class RTexture *> Textures[EShaderType::ST_NUM_SHADER_TYPES];
-		std::vector<class RBuffer *> ConstantBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+		std::array<class RBuffer *, RAPI_MAX_NUM_SHADER_RESOURCES> StructuredBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+		std::array<class RTexture *, RAPI_MAX_NUM_SHADER_RESOURCES> Textures[EShaderType::ST_NUM_SHADER_TYPES];
+		std::array<class RBuffer *, RAPI_MAX_NUM_SHADER_RESOURCES> ConstantBuffers[EShaderType::ST_NUM_SHADER_TYPES];
 		unsigned int NumDrawElements; // Vertices, indices...
 		unsigned int StartVertexOffset;
 		unsigned int StartIndexOffset;

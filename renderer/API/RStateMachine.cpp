@@ -268,9 +268,9 @@ namespace RAPI
 		memset(&State.BoundIDs, 0xFF, sizeof(State.BoundIDs));
 
 		for (int i = 0; i < EShaderType::ST_NUM_SHADER_TYPES; i++) {
-			State.Textures[i].clear();
-			State.ConstantBuffers[i].clear();
-			State.StructuredBuffers[i].clear();
+			State.Textures[i].fill(nullptr);
+			State.ConstantBuffers[i].fill(nullptr);
+			State.StructuredBuffers[i].fill(nullptr);
 		}
 	}
 
@@ -378,9 +378,8 @@ namespace RAPI
 
 	void RStateMachine::SetTexture(unsigned int slot, RTexture *texture, EShaderType stage)
 	{
-
 		if (State.Textures[stage].size() <= slot)
-			State.Textures[stage].resize(slot + 1);
+			return;
 
 		State.Textures[stage][slot] = texture;
 
@@ -392,8 +391,8 @@ namespace RAPI
 
 	void RStateMachine::SetConstantBuffer(unsigned int slot, RBuffer *buffer, EShaderType stage)
 	{
-		if (State.ConstantBuffers[stage].size() <= slot)
-			State.ConstantBuffers[stage].resize(slot + 1);
+		if (State.Textures[stage].size() <= slot)
+			return;
 
 		State.ConstantBuffers[stage][slot] = buffer;
 	}
@@ -430,8 +429,8 @@ namespace RAPI
 
 	void RStateMachine::SetStructuredBuffer(unsigned int slot, RBuffer *buffer, EShaderType stage)
 	{
-		if (State.StructuredBuffers[stage].size() <= slot)
-			State.StructuredBuffers[stage].resize(slot + 1);
+		if (State.Textures[stage].size() <= slot)
+			return;
 
 		State.StructuredBuffers[stage][slot] = buffer;
 	}

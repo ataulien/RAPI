@@ -227,7 +227,7 @@ static void GetFirstNMessages(GLuint numMsgs)
 	std::vector<GLuint> ids(numMsgs);
 	std::vector<GLsizei> lengths(numMsgs);
 
-	GLuint numFound = glGetDebugMessageLog(numMsgs, msgData.size(), &sources[0], &types[0], &ids[0], &severities[0], &lengths[0], &msgData[0]);
+	GLuint numFound = glGetDebugMessageLog(numMsgs, (GLsizei)msgData.size(), &sources[0], &types[0], &ids[0], &severities[0], &lengths[0], &msgData[0]);
 
 	sources.resize(numFound);
 	types.resize(numFound);

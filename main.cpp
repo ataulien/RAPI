@@ -87,14 +87,15 @@ void Update()
 	static float s_t = 0;
 	s_t += 0.01f;
 
-
 	RFloat4 pos = RFloat4(sinf(s_t) * 0.1f, cosf(s_t) * 0.1f, 0, 0);
 	g_ConstantBuffer->UpdateData(&pos);
 
 	REngine::RenderingDevice->OnFrameStart();
 
 	RRenderQueueID queue = REngine::RenderingDevice->AcquireRenderQueue();
-	REngine::RenderingDevice->QueuePipelineState(g_Triangle, queue);
+
+	for(int i=0;i<1000;i++)
+		REngine::RenderingDevice->QueuePipelineState(g_Triangle, queue);
 
 	REngine::RenderingDevice->ProcessRenderQueue(queue);
 
@@ -159,7 +160,7 @@ int main(int argc, char** argv)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+	//glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 	GLFWwindow* wnd = glfwCreateWindow(1280, 720, "--- Test ---", nullptr, nullptr);
 
 

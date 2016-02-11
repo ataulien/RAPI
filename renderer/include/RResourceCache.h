@@ -32,6 +32,7 @@ namespace RAPI
 				cache.FreeMemory.pop_back();
 
 				// Reallocate (Call constructor on memory)
+				// TODO: Allocate linearly
 				cache.Objects[f] = (RResource *) new(cache.Objects[f])T();
 
 				// Re-set the id

@@ -18,7 +18,7 @@ namespace RAPI
 		/**
 		 * Links a program from the shaders this is used with or takes one from cache if this already happened
 		 */
-		GLuint LinkShaderObjectAPI(const std::vector<RGLShader*>& shaders);
+		GLuint LinkShaderObjectAPI(RGLShader** shaders, size_t numShaders);
 
 		/**
 		 * Returns the unlinked shaderobject of this 

@@ -6,6 +6,12 @@
 #ifdef RND_GL
 using namespace RAPI;
 
+// Map to get from RAPI-Type to GLenum
+std::map<EShaderType, GLenum> GLShaderTypeMap = { {EShaderType::ST_VERTEX, GL_VERTEX_SHADER},
+														{EShaderType::ST_PIXEL, GL_FRAGMENT_SHADER},
+														{EShaderType::ST_GEOMETRY, GL_GEOMETRY_SHADER},
+														{EShaderType::ST_HULL, GL_TESS_CONTROL_SHADER},
+														{EShaderType::ST_DOMAIN, GL_TESS_EVALUATION_SHADER},};
 
 RAPI::RGLShader::RGLShader()
 {
@@ -65,7 +71,7 @@ void CheckShader(GLuint id, GLuint type, GLint *ret, const char *onfail)
 */
 bool RGLShader::CompileShaderAPI(EShaderType shaderType)
 {
-	GLuint s = glCreateShader(shaderType);
+	GLuint s = glCreateShader(GLShaderTypeMap[shaderType]);
 	CheckGlError();
 
 	if(IsFromMemory)
@@ -122,10 +128,10 @@ bool RGLShader::CompileShaderAPI(EShaderType shaderType)
 /**
 * Links a program from the shaders this is used with or takes one from cache if this already happened
 */
-GLuint RGLShader::LinkShaderObjectAPI(const std::vector<RGLShader*>& shaders)
+GLuint RGLShader::LinkShaderObjectAPI(RGLShader** shaders, size_t numShaders)
 {
 	// Hash the pointers to the shaders we got here
-	size_t hash = RTools::HashVector(shaders);
+	size_t hash = RTools::HashArray(shaders, sizeof(RGLShader*) * numShaders);
 
 	// Check if we already have that constelation
 	auto it = ProgramMap.find(hash);
@@ -137,9 +143,10 @@ GLuint RGLShader::LinkShaderObjectAPI(const std::vector<RGLShader*>& shaders)
 	CheckGlError();
 
 	// Attach all of our shaders
-	for(RGLShader* s : shaders)
+	for(int i=0;i<numShaders;i++)
 	{
-		glAttachShader(program, s->GetShaderObjectAPI());
+		if(shaders[i])
+			glAttachShader(program, shaders[i]->GetShaderObjectAPI());
 	}
 
 	// Now link everything together and add it to the map

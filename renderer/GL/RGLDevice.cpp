@@ -75,7 +75,6 @@ bool RGLDevice::PrepareFrameAPI()
 
 bool RGLDevice::OnFrameEndAPI()
 {
-
     return true;
 }
 
@@ -92,7 +91,8 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 {
 	stateMachine.SetFromPipelineState(&state, changes);
 	const RPipelineStateFull& fs = stateMachine.GetCurrentState();
-	std::vector<RGLShader*> shaders;
+	std::array<RGLShader*, EShaderType::ST_NUM_SHADER_TYPES> shaders;
+	shaders.fill(0);
 	
 	//if(changes.PrimitiveType)
 	//	context->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)state.IDs.PrimitiveType);
@@ -145,15 +145,15 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 		shaders.push_back(fs.VertexShader);*/
 
 	if(fs.PixelShader)
-		shaders.push_back(fs.PixelShader);
+		shaders[EShaderType::ST_PIXEL] = fs.PixelShader;
 
 	if(fs.VertexShader)
-		shaders.push_back(fs.VertexShader);
+		shaders[EShaderType::ST_VERTEX] = fs.VertexShader;
 
 	// Link shaders/get a program from cache
 	if(!shaders.empty())
 	{
-		glUseProgram(shaders[0]->LinkShaderObjectAPI(shaders));
+		glUseProgram(shaders[0]->LinkShaderObjectAPI(shaders.data(), EShaderType::ST_NUM_SHADER_TYPES));
 		CheckGlError();
 	}
 	// TODO: Do this for all shader stages
@@ -179,7 +179,7 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 			if(fs.VertexShader && fs.ConstantBuffers[EShaderType::ST_VERTEX][j])
 			{
 				// TODO: Cache the call from LinkShaderObjectAPI above somewhere
-				GLuint program = shaders[0]->LinkShaderObjectAPI(shaders);
+				GLuint program = shaders[0]->LinkShaderObjectAPI(shaders.data(), EShaderType::ST_NUM_SHADER_TYPES);
 
 				GLint numBlocks;
 				glGetProgramiv(program, GL_ACTIVE_UNIFORM_BLOCKS, &numBlocks);

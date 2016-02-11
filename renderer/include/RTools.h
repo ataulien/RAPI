@@ -194,6 +194,25 @@ namespace RAPI
 			return hash;
 		}
 
+		/** Hashes the data of the given vector */
+		static size_t HashArray(const void* hData, size_t sizeInBytes)
+		{
+			byte* data = (byte *)hData;
+			size_t hash = 0;
+			for(int i=0;i<sizeInBytes;i+=4)
+			{
+				RDWORD d;
+				((char *)&d)[0] = data[i];
+				((char *)&d)[1] = data[i+1];
+				((char *)&d)[2] = data[i+2];
+				((char *)&d)[3] = data[i+3];
+
+				hash_combine(hash, d);
+			}
+
+			return hash;
+		}
+
 		/** Reloads all shaders */
 		static void ReloadShaders()
 		{

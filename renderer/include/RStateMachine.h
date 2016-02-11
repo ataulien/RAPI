@@ -2,9 +2,14 @@
 #include "RBaseShader.h"
 #include "RPipelineState.h"
 #include <sstream>
+#include <array>
 
 namespace RAPI
 {
+	class RBuffer;
+	class RTexture;
+	class RBuffer;
+
 	struct RPipelineStateFull
 	{
 		RPipelineStateFull()
@@ -33,9 +38,9 @@ namespace RAPI
 
 		class RInputLayout *InputLayout;
 
-		std::vector<class RBuffer *> StructuredBuffers[EShaderType::ST_NUM_SHADER_TYPES];
-		std::vector<class RTexture *> Textures[EShaderType::ST_NUM_SHADER_TYPES];
-		std::vector<class RBuffer *> ConstantBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+		std::array<RBuffer *, RAPI_MAX_NUM_SHADER_RESOURCES> StructuredBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+		std::array<RTexture *, RAPI_MAX_NUM_SHADER_RESOURCES> Textures[EShaderType::ST_NUM_SHADER_TYPES];
+		std::array<RBuffer *, RAPI_MAX_NUM_SHADER_RESOURCES> ConstantBuffers[EShaderType::ST_NUM_SHADER_TYPES];
 
 		// States
 		class RRasterizerState *RasterizerState;
@@ -94,27 +99,26 @@ namespace RAPI
 
 		struct ChangesStruct
 		{
-			bool PrimitiveType;
-			bool RasterizerState;
-			bool BlendState;
-			bool DepthStencilState;
-			bool SamplerState;
+			struct
+			{
+				bool PrimitiveType : 1;
+				bool RasterizerState : 1;
+				bool BlendState : 1;
+				bool DepthStencilState : 1;
+				bool SamplerState : 1;
+				bool IndexBuffer : 1;
+				bool PixelShader : 1;
+				bool VertexShader : 1;
+				bool GeometryShader : 1;
+				bool HullShader : 1;
+				bool DomainShader : 1;
+				bool InputLayout : 1;
+				bool MainTexture : 1;
+				bool Viewport : 1;
+				bool DrawFunctionID : 1;
+			};
 
 			bool VertexBuffers[2];
-			bool IndexBuffer;
-
-			bool PixelShader;
-			bool VertexShader;
-			bool GeometryShader;
-			bool HullShader;
-			bool DomainShader;
-			bool InputLayout;
-
-			bool MainTexture;
-			bool Viewport;
-
-			bool DrawFunctionID;
-
 			bool ConstantBuffers[EShaderType::ST_NUM_SHADER_TYPES];
 			bool StructuredBuffers[EShaderType::ST_NUM_SHADER_TYPES];
 		};

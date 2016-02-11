@@ -172,8 +172,6 @@ namespace RAPI
 		CA_READ = 0x20000L,
 	};
 
-
-#ifdef RND_D3D11
 	enum EShaderType
 	{
 		ST_VERTEX,
@@ -183,6 +181,9 @@ namespace RAPI
 		ST_DOMAIN,
 		ST_NUM_SHADER_TYPES
 	};
+
+#ifdef RND_D3D11
+
 
 	/** Layed out for D3D11*/
 	enum EBindFlags
@@ -214,17 +215,6 @@ namespace RAPI
 		U_IMMUTABLE = 1
 	};
 #elif defined(RND_GL)
-	/** Layed out for openGL*/
-	enum EShaderType
-	{
-		ST_VERTEX = GL_VERTEX_SHADER,
-		ST_PIXEL = GL_FRAGMENT_SHADER,
-		ST_GEOMETRY = GL_GEOMETRY_SHADER,
-		ST_HULL = GL_TESS_CONTROL_SHADER,
-		ST_DOMAIN = GL_TESS_EVALUATION_SHADER,
-		ST_NUM_SHADER_TYPES
-	};
-
 	/** Layed out for openGL*/
 	enum EBindFlags
 	{

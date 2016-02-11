@@ -48,6 +48,7 @@ typedef void* WindowHandle;
 #include "Types.h"
 #include <string.h>
 #include <algorithm>
+#include <array>
 
 #ifdef _MSC_VER
 #define SELECTANY __declspec(selectany)
