@@ -1,5 +1,14 @@
 #include "pch.h"
-#include <GL/GLU.h>
+
+#ifndef WIN32
+
+int main(int argc, char** argv)
+{
+	return 0;
+}
+
+#else
+
 #include <iostream>
 #include <REngine.h>
 #include <GLFW/glfw3.h>
@@ -193,3 +202,4 @@ int main(int argc, char** argv)
 
 	return 0;
 }
+#endif
