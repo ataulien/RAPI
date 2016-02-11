@@ -143,7 +143,7 @@ public:
 		}
 
 #ifdef WIN32
-		OutputDebugString((m_Info.str() + m_Message.str() + "n").c_str());
+		OutputDebugString((m_Info.str() + m_Message.str() + "\n").c_str());
 #endif
 
 		// Pop a messagebox, if wanted
