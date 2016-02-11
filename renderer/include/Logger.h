@@ -133,12 +133,12 @@ public:
 		{
 			fputs(m_Info.str().c_str(),f);
 			fputs(m_Message.str().c_str(),f);
-			fputs("\n",f);
+			fputs("n",f);
 
 			fclose(f);
 
 #ifdef WIN32
-			OutputDebugString((m_Info.str() + m_Message.str() + "\n").c_str());
+			OutputDebugString((m_Info.str() + m_Message.str() + "n").c_str());
 #endif
 
 			// Do callback
@@ -251,10 +251,10 @@ static void GetFirstNMessages(GLuint numMsgs)
 #define CheckGlError() { \
 	{ \
 		GLenum err(glGetError()); \
-\
+		\
 		while(err != GL_NO_ERROR) {\
 			std::string error;\
-\
+			\
 			switch(err) {\
 			case GL_INVALID_OPERATION:      error = "INVALID_OPERATION";      break;\
 			case GL_INVALID_ENUM:           error = "INVALID_ENUM";           break;\
@@ -262,7 +262,7 @@ static void GetFirstNMessages(GLuint numMsgs)
 			case GL_OUT_OF_MEMORY:          error = "OUT_OF_MEMORY";          break;\
 			case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION";  break;\
 			}\
-\
+			\
 			LogError() << "GL_" << error;\
 			err = glGetError();\
 			GetFirstNMessages(10);\

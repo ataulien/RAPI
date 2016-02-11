@@ -17,7 +17,7 @@ namespace RAPI
 {
 
 #ifndef RND_D3D11
-#pragma warning Shaders for Lines hardcoded as HLSL. You may want to change that!
+#pragma message ("Shaders for Lines hardcoded as HLSL. You may want to change that!")
 #endif
 
 	const char *LINE_VERTEX_SHADER = "cbuffer Matrices_PerFrame : register( b0 )"
@@ -188,7 +188,7 @@ namespace RAPI
 
 		// Update state
 		REngine::ResourceCache->DeleteResource(LinePipelineState);
-		LinePipelineState = sm.MakeDrawCall(LineCache.size(), 0);
+		LinePipelineState = sm.MakeDrawCall((unsigned int)LineCache.size(), 0);
 
 		// Push to a queue
 		RRenderQueueID q = REngine::RenderingDevice->AcquireRenderQueue(false, "Line Queue");

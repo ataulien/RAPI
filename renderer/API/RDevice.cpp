@@ -42,7 +42,7 @@ namespace RAPI
 		// Make deferred contexts for all threads
 		std::vector<size_t> threadIDs = REngine::ThreadPool->getThreadIDs();
 		for (unsigned int i = 0; i < threadIDs.size(); i++) {
-			RegisterThread(threadIDs[i]);
+			RegisterThread((uint32_t)threadIDs[i]);
 		}
 
 		return true;
@@ -233,7 +233,7 @@ Functions like a frame-counter, but respects different rendering-stages */
 			Profiler.EndProfile(q->Name);
 
 		QueueCounter--;
-		QueuedDrawCallCounter -= RenderQueue[queue]->Queue.size();
+		QueuedDrawCallCounter -= (unsigned int)RenderQueue[queue]->Queue.size();
 		RenderQueue[queue]->InUse = false;
 		RenderQueue[queue]->Queue.clear();
 		RenderQueue[queue]->Changes.clear();
@@ -312,7 +312,7 @@ Functions like a frame-counter, but respects different rendering-stages */
 		RenderQueue.back()->SortQueue = sortable;
 		RenderQueue.back()->Name = name;
 
-		return RenderQueue.size() - 1;
+		return (unsigned int)(RenderQueue.size() - 1);
 	}
 
 /** 
@@ -447,12 +447,12 @@ Functions like a frame-counter, but respects different rendering-stages */
 
 		std::vector<std::future<void>> cmdListFutures;
 		for (unsigned int i = 0; i < REngine::ThreadPool->getNumThreads(); i++) {
-			unsigned int num = q1.Queue.size() / REngine::ThreadPool->getNumThreads();
+			unsigned int num = ((unsigned int)q1.Queue.size()) / (unsigned int)REngine::ThreadPool->getNumThreads();
 			unsigned int start = num * i;
 
 			// Add all  of the remaining work to the last thread
 			if (i + 1 == REngine::ThreadPool->getNumThreads())
-				num = q1.Queue.size() - start;
+				num = ((unsigned int)q1.Queue.size()) - start;
 
 			assert(!q1.Queue.empty());
 

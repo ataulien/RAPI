@@ -1,11 +1,15 @@
 #include "pch.h"
 #include "RGLBuffer.h"
 #include "Logger.h"
+#include "REngine.h"
+#include "RDevice.h"
 #include "RInputLayout.h"
 
 using namespace RAPI;
 
 #ifdef RND_GL
+
+const bool USE_DOUBLEBUFFERING = true;
 
 RAPI::RGLBuffer::RGLBuffer()
 {
@@ -23,16 +27,26 @@ RAPI::RGLBuffer::~RGLBuffer()
 */
 bool RGLBuffer::CreateBufferAPI(void *initData)
 {
-	glGenBuffers(1, &VertexBufferObject);
-	CheckGlError();
+	unsigned int buffersToCreate = 1;
 
-	glBindBuffer (BindFlags, VertexBufferObject);
-	CheckGlError();
+	// Make more buffers if this is supposed to be dynamic
+	if((Usage & EUsageFlags::U_DYNAMIC) != 0 && USE_DOUBLEBUFFERING)
+		buffersToCreate = NUM_BUFFERSTASH_FRAME_STORAGES;
 
-	// Apply initial data and set size
-	glBufferData (BindFlags, SizeInBytes, initData, Usage);
-	CheckGlError();
+	for(unsigned int i = 0; i < buffersToCreate; i++)
+	{
+		glGenBuffers(1, &VertexBufferObject);
+		CheckGlError();
 
+		glBindBuffer(BindFlags, VertexBufferObject);
+		CheckGlError();
+
+		// Apply initial data and set size
+		glBufferData(BindFlags, SizeInBytes, initData, Usage);
+		CheckGlError();
+
+		BufferStash[i].first = VertexBufferObject;
+	}
 	return true;
 }
 
@@ -41,6 +55,9 @@ bool RGLBuffer::CreateBufferAPI(void *initData)
 */
 bool RGLBuffer::MapAPI(void **dataOut)
 {
+	// Switch buffers if needed to avoid cpu stall
+	TrySwitchBuffers();
+
 	// Get buffer pointer
 	glBindBuffer (BindFlags, VertexBufferObject);
 	void* ptr = glMapBuffer(BindFlags, GL_WRITE_ONLY);
@@ -81,7 +98,7 @@ bool RGLBuffer::UpdateDataAPI(void *data, size_t dataSize)
 		DeallocateAPI();
 
 		// Just set the new size and keep the old settings
-		SizeInBytes = dataSize;
+		SizeInBytes = (unsigned int)dataSize;
 
 		// Create buffer and immediately set the data
 		return CreateBufferAPI(data);
@@ -130,7 +147,7 @@ void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObject);
 
-	for(int i = 0; i < inputLayout->GetNumInputDescElements(); i++)
+	for(unsigned int i = 0; i < inputLayout->GetNumInputDescElements(); i++)
 	{
 		const INPUT_ELEMENT_DESC& d = desc[i];
 		
@@ -164,5 +181,30 @@ void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 		CheckGlError();
 		
 	}
+}
+
+/** Switches to the next buffer in the stash, if we're doing maps on the same frame 
+Returns true if switched. */
+bool RGLBuffer::TrySwitchBuffers()
+{
+	// Only on dynamic buffers
+	if((Usage & EUsageFlags::U_DYNAMIC) == 0 || !USE_DOUBLEBUFFERING)
+		return false;
+
+	unsigned int frame = REngine::RenderingDevice->GetFrameCounter();
+
+	// Check if we were updated on the current or last frame
+	if(LastFrameUpdated == frame || LastFrameUpdated + 1 == frame)
+	{
+		// We were, do the switch!
+		StashBufferRotation = (StashBufferRotation + 1) % NUM_BUFFERSTASH_FRAME_STORAGES;
+		VertexBufferObject = BufferStash[StashBufferRotation].first;
+		VertexArrayObject = BufferStash[StashBufferRotation].second;
+		return true;
+	}
+
+	LastFrameUpdated = frame;
+
+	return false;
 }
 #endif

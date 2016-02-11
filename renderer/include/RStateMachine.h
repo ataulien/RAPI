@@ -147,24 +147,24 @@ namespace RAPI
 			std::string ProduceString()
 			{
 				std::stringstream ss;
-				ss << "RasterizerState: " << RasterizerState << "\n";
-				ss << "BlendState: " << BlendState << "\n";
-				ss << "DepthStencilState: " << DepthStencilState << "\n";
-				ss << "SamplerState: " << SamplerState << "\n";
-				ss << "VertexBuffers[0]: " << VertexBuffers[0] << "\n";
-				ss << "VertexBuffers[1]: " << VertexBuffers[1] << "\n";
-				ss << "IndexBuffer: " << IndexBuffer << "\n";
-				ss << "PixelShader: " << PixelShader << "\n";
-				ss << "VertexShader: " << VertexShader << "\n";
-				ss << "GeometryShader: " << GeometryShader << "\n";
-				ss << "HullShader: " << HullShader << "\n";
-				ss << "DomainShader: " << DomainShader << "\n";
-				ss << "InputLayout: " << InputLayout << "\n";
-				ss << "MainTexture: " << MainTexture << "\n";
-				ss << "Viewport: " << Viewport << "\n";
-				ss << "DrawFunctionID: " << DrawFunctionID << "\n";
-				ss << "ConstantBuffers: " << ConstantBuffers[ST_PIXEL] + ConstantBuffers[ST_VERTEX] << "\n";
-				//ss << ": "					<<  << "\n";
+				ss << "RasterizerState: " << RasterizerState << "n";
+				ss << "BlendState: " << BlendState << "n";
+				ss << "DepthStencilState: " << DepthStencilState << "n";
+				ss << "SamplerState: " << SamplerState << "n";
+				ss << "VertexBuffers[0]: " << VertexBuffers[0] << "n";
+				ss << "VertexBuffers[1]: " << VertexBuffers[1] << "n";
+				ss << "IndexBuffer: " << IndexBuffer << "n";
+				ss << "PixelShader: " << PixelShader << "n";
+				ss << "VertexShader: " << VertexShader << "n";
+				ss << "GeometryShader: " << GeometryShader << "n";
+				ss << "HullShader: " << HullShader << "n";
+				ss << "DomainShader: " << DomainShader << "n";
+				ss << "InputLayout: " << InputLayout << "n";
+				ss << "MainTexture: " << MainTexture << "n";
+				ss << "Viewport: " << Viewport << "n";
+				ss << "DrawFunctionID: " << DrawFunctionID << "n";
+				ss << "ConstantBuffers: " << ConstantBuffers[ST_PIXEL] + ConstantBuffers[ST_VERTEX] << "n";
+				//ss << ": "					<<  << "n";
 
 				return ss.str();
 			}

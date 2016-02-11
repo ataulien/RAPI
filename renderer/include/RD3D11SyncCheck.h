@@ -170,14 +170,14 @@ namespace RAPI
 				CheckResults(ctx, addr, results);
 
 				//std::stringstream out;
-				//out << "GPU-Sync summary for '0x" << std::hex << addr << "':\n";
+				//out << "GPU-Sync summary for '0x" << std::hex << addr << "':n";
 				//OutputDebugStringA(out.str().c_str());
 
 				for(auto& r : results)
 				{
 					/*std::stringstream out;
 
-					out << std::fixed << " - CPU: " << r.CPUElapsed << ", GPU: " << r.GPUElapsed << "\n";
+					out << std::fixed << " - CPU: " << r.CPUElapsed << ", GPU: " << r.GPUElapsed << "n";
 					OutputDebugStringA(out.str().c_str());
 					out.clear();*/
 
@@ -219,10 +219,10 @@ namespace RAPI
 }
 
 #ifdef D3D11_GPU_SYNC_CHECK
-#define RD3D11_CTX_SYNC_CHECK(x, device, ctx) { __ctx_sync_check::__sync_check_stash::Query& q = __ctx_sync_check::GlobalSyncCheckStash.NewQuery(this, device); \
-	q.start(ctx); \
-	{x;} \
-	q.end(ctx); \
+#define RD3D11_CTX_SYNC_CHECK(x, device, ctx) { __ctx_sync_check::__sync_check_stash::Query& q = __ctx_sync_check::GlobalSyncCheckStash.NewQuery(this, device); 
+	q.start(ctx); 
+	{x;} 
+	q.end(ctx); 
 	__ctx_sync_check::GlobalSyncCheckStash.CheckSyncPoint(ctx, this); }
 
 

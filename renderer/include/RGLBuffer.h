@@ -6,6 +6,9 @@
 
 namespace RAPI
 {
+	// Numbers of frames should have buffers to prepare for
+	const int NUM_BUFFERSTASH_FRAME_STORAGES = 3;
+
 	class RInputLayout;
     class RGLBuffer : public RBaseBuffer
     {
@@ -56,11 +59,26 @@ namespace RAPI
 		*/
 		GLuint GetBufferObjectAPI(){return VertexBufferObject;}
 	private:
+
+		/** Switches to the next buffer in the stash, if we're doing maps on the same frame 
+			Returns true if switched. */
+		bool TrySwitchBuffers();
+
 		// The created VBO
 		GLuint VertexBufferObject;
 
 		// The used VAO
 		GLuint VertexArrayObject;
+
+		// Multiple allocated buffers for a dynamic type to reduce
+		// GPU-Sync points. Only active with the usage is set to DYNAMIC
+		std::pair<GLuint, GLuint> BufferStash[NUM_BUFFERSTASH_FRAME_STORAGES];
+
+		// Last frame this buffer was updated on
+		unsigned int LastFrameUpdated;
+
+		// Current slot of the BufferStash we are using
+		unsigned int StashBufferRotation;
     };
 }
 

@@ -79,7 +79,7 @@ HRESULT RD3D11Shader::CompileShaderFromFile(const CHAR* szFileName, LPCSTR szEnt
 		/*if(Engine->SwapchainCreated())
 		Engine->GetConsole()->PostConsoleMessage((char*)pErrorBlob->GetBufferPointer());
 		else
-		LogWarnBox() << (char*)pErrorBlob->GetBufferPointer() << "\n\n (You can ignore the next error from Gothic about too small video memory!)";
+		LogWarnBox() << (char*)pErrorBlob->GetBufferPointer() << "nn (You can ignore the next error from Gothic about too small video memory!)";
 		*/
 		pErrorBlob->Release();
 	}

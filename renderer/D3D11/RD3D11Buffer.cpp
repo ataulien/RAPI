@@ -137,7 +137,7 @@ bool RD3D11Buffer::UpdateDataAPI(void* data, size_t dataSize)
 		DeallocateAPI();
 
 		// Just set the new size and keep the old settings
-		SizeInBytes = dataSize;
+		SizeInBytes = (unsigned int)dataSize;
 
 		// Create buffer and immediately set the data
 		return CreateBufferAPI(data);

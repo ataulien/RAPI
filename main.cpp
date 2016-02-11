@@ -4,9 +4,11 @@
 #include <REngine.h>
 #include <GLFW/glfw3.h>
 
+#ifdef WIN32
 #define GLFW_EXPOSE_NATIVE_WGL
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
+#endif
 
 #include <RTools.h>
 #include <RBuffer.h>

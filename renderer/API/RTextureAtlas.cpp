@@ -77,7 +77,7 @@ namespace RAPI
 			}
 
 			// Store the UV for the texture
-			TextureUVs[t.first] = std::make_pair(RFloat2(texturePos.x, texturePos.y), RFloat2(0, 0));
+			TextureUVs[t.first] = std::make_pair(RFloat2((float)texturePos.x, (float)texturePos.y), RFloat2(0, 0));
 
 			// Goto next position
 			texturePos.x += singleTextureDimensions.x;
@@ -89,8 +89,8 @@ namespace RAPI
 
 		// Copy memory of each texture to it's place
 		for (auto &t : TextureUVs) {
-			int sx = t.second.first.x;
-			int sy = t.second.first.y;
+			int sx = (int)t.second.first.x;
+			int sy = (int)t.second.first.y;
 			auto &st = StoredTextures[t.first];
 			for (int y = 0; y < singleTextureDimensions.y; y++) {
 				for (int x = 0; x < singleTextureDimensions.x; x++) {
@@ -104,13 +104,13 @@ namespace RAPI
 			p.second.first.x /= textureSize.x;
 			p.second.first.y /= textureSize.y;
 
-			p.second.second.x = textureSize.x / singleTextureDimensions.x;
-			p.second.second.y = textureSize.y / singleTextureDimensions.y;
+			p.second.second.x = (float)textureSize.x / singleTextureDimensions.x;
+			p.second.second.y = (float)textureSize.y / singleTextureDimensions.y;
 		}
 
 		// Create GPU-Resource
 		Atlas = REngine::ResourceCache->CreateResource<RTexture>();
-		Atlas->CreateTexture(mem, actualSize, textureSize, 1);
+		Atlas->CreateTexture(mem, (unsigned int)actualSize, textureSize, 1);
 
 		// Clear memory
 		StoredTextures.clear();

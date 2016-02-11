@@ -45,7 +45,7 @@ namespace RAPI
 				cache.Objects.push_back(obj);
 
 				// Set the current id
-				cache.Objects.back()->SetID(cache.Objects.size() - 1);
+				cache.Objects.back()->SetID((unsigned int)cache.Objects.size() - 1);
 
 				return (T *) obj;
 			}
