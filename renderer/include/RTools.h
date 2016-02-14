@@ -18,6 +18,15 @@
 #include <pthread.h>
 #endif
 
+// TODO: Fix this properly
+#ifdef min
+#undef min
+#endif
+
+#ifdef max
+#undef max
+#endif
+
 namespace RAPI
 {
 
@@ -199,7 +208,7 @@ namespace RAPI
 		{
 			byte* data = (byte *)hData;
 			size_t hash = 0;
-			for(int i=0;i<sizeInBytes;i+=4)
+			for(unsigned int i=0;i<(unsigned int)sizeInBytes;i+=4)
 			{
 				RDWORD d;
 				((char *)&d)[0] = data[i];

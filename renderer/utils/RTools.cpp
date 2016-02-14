@@ -12,14 +12,7 @@
 using namespace RAPI;
 using namespace RTools;
 
-// TODO: Fix this properly
-#ifdef min
-#undef min
-#endif
 
-#ifdef max
-#undef max
-#endif
 
 /**
  * Creates default instances of the state-objects and caches them using the 'default'-alias
