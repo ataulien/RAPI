@@ -137,14 +137,14 @@ public:
 
 			fclose(f);
 
-#ifdef WIN32
-			OutputDebugString((m_Info.str() + m_Message.str() + "n").c_str());
-#endif
-
 			// Do callback
 			if(s_LogCallback)
 				s_LogCallback(m_Message.str());
 		}
+
+#ifdef WIN32
+		OutputDebugString((m_Info.str() + m_Message.str() + "\n").c_str());
+#endif
 
 		// Pop a messagebox, if wanted
 		switch(m_MessageBoxStyle)
