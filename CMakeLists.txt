@@ -4,58 +4,56 @@ project(RAPI)
 find_package(OpenGL REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-IF( WIN32 )
+if( WIN32 )
 	
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /DEBUG")
 	SET( PSDK_PATH "C:/Program Files/Microsoft Platform SDK/Bin" )
 	SET( PSDK_INC "C:/Program Files/Microsoft Platform SDK/Include" )
 
-if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-	FIND_PATH(DX_INCLUDE_PATH d3d11.h
-		PATHS
-			"$ENV{DXSDK_DIR}/Include"
-			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Include"
-		DOC "The directory where D3D11.h resides")
+	if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+		FIND_PATH(DX_INCLUDE_PATH d3d11.h
+			PATHS
+				"$ENV{DXSDK_DIR}/Include"
+				"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Include"
+			DOC "The directory where D3D11.h resides")
 
 
-	FIND_LIBRARY(D3D11_LIBRARY d3d11.lib
-		PATHS
-			"$ENV{DXSDK_DIR}/Lib/x64"
-			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Lib/x64"
-		DOC "The directory where d3d11.lib resides")
+		FIND_LIBRARY(D3D11_LIBRARY d3d11.lib
+			PATHS
+				"$ENV{DXSDK_DIR}/Lib/x64"
+				"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Lib/x64"
+			DOC "The directory where d3d11.lib resides")
 
-	FIND_LIBRARY(D3DX11_LIBRARY d3dx11.lib
-		PATHS
-			"$ENV{DXSDK_DIR}/Lib/x64"
-			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Lib/x64"
-		DOC "The directory where d3dx11.lib resides")
-else()
-	FIND_PATH(DX_INCLUDE_PATH d3d11.h
-		PATHS
-			"$ENV{DXSDK_DIR}/Include"
-			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Include"
-		DOC "The directory where D3D11.h resides")
+		FIND_LIBRARY(D3DX11_LIBRARY d3dx11.lib
+			PATHS
+				"$ENV{DXSDK_DIR}/Lib/x64"
+				"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Lib/x64"
+			DOC "The directory where d3dx11.lib resides")
+	else()
+		FIND_PATH(DX_INCLUDE_PATH d3d11.h
+			PATHS
+				"$ENV{DXSDK_DIR}/Include"
+				"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Include"
+			DOC "The directory where D3D11.h resides")
 
 
-	FIND_LIBRARY(D3D11_LIBRARY d3d11.lib
-		PATHS
-			"$ENV{DXSDK_DIR}/Lib/x86"
-			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Lib/x86"
-		DOC "The directory where d3d11.lib resides")
+		FIND_LIBRARY(D3D11_LIBRARY d3d11.lib
+			PATHS
+				"$ENV{DXSDK_DIR}/Lib/x86"
+				"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Lib/x86"
+			DOC "The directory where d3d11.lib resides")
 
-	FIND_LIBRARY(D3DX11_LIBRARY d3dx11.lib
-		PATHS
-			"$ENV{DXSDK_DIR}/Lib/x86"
-			"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Lib/x86"
-		DOC "The directory where d3dx11.lib resides")
-endif()
+		FIND_LIBRARY(D3DX11_LIBRARY d3dx11.lib
+			PATHS
+				"$ENV{DXSDK_DIR}/Lib/x86"
+				"$ENV{PROGRAMFILES}/Microsoft DirectX SDK/Lib/x86"
+			DOC "The directory where d3dx11.lib resides")
+	endif()
 		
 	SET( DX11_LIBRARIES ${D3D11_LIBRARY} ${D3DX11_LIBRARY} )
 	
 	include_directories(${DX_INCLUDE_PATH})
-ELSE()
-	
-ENDIF() 
+endif() 
 
 file(GLOB SOURCE_FILES
         "*.h"
@@ -93,45 +91,44 @@ if (MSVC)
     endforeach( src_file ${SOURCE_FILES} )
 endif (MSVC)
 
-IF( WIN32 )
-include_directories("/")
-include_directories("renderer")
-include_directories("renderer/NULL")
-include_directories("renderer/base")
-include_directories("renderer/API")
-include_directories("renderer/utils")
-include_directories("renderer/D3D11")
-include_directories("renderer/GL")
-include_directories("renderer/include")
+if( WIN32 )
+	include_directories("/")
+	include_directories("renderer")
+	include_directories("renderer/NULL")
+	include_directories("renderer/base")
+	include_directories("renderer/API")
+	include_directories("renderer/utils")
+	include_directories("renderer/D3D11")
+	include_directories("renderer/GL")
+	include_directories("renderer/include")
 
-if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-set(GLFW_LIB_DIR "lib/glfw/x64")
+	add_subdirectory(lib/glew)
+
+	if( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+		set(GLFW_LIB_DIR "lib/glfw/x64")
+	else()
+		set(GLFW_LIB_DIR "lib/glfw/Win32")
+	endif()
+
+	link_directories(${GLFW_LIB_DIR})
+	link_directories(lib/glew/lib)
+
+	set( GLEW_LIBRARIES glew glu32 glfw3)
+
 else()
-set(GLFW_LIB_DIR "lib/glfw/Win32")
+	include_directories(".")
+	include_directories("./renderer")
+	include_directories("./renderer/NULL")
+	include_directories("./renderer/base")
+	include_directories("./renderer/API")
+	include_directories("./renderer/utils")
+	include_directories("./renderer/D3D11")
+	include_directories("./renderer/GL")
+	include_directories("./renderer/include")
+	#SET( GLEW_LIBRARIES "GLEW" "GLU" "glfw3")
 endif()
 
-link_directories(${GLFW_LIB_DIR})
-link_directories(lib/glew/lib)
-
-SET( GLEW_LIBRARIES glew glu32 glfw3)
-
-
-ELSE()
-include_directories(".")
-include_directories("./renderer")
-include_directories("./renderer/NULL")
-include_directories("./renderer/base")
-include_directories("./renderer/API")
-include_directories("./renderer/utils")
-include_directories("./renderer/D3D11")
-include_directories("./renderer/GL")
-include_directories("./renderer/include")
-#SET( GLEW_LIBRARIES "GLEW" "GLU" "glfw3")
-ENDIF()
-
 include_directories("include")
-
-add_subdirectory(lib/glew)
 
 add_definitions(-DNOMINMAX -D_CRT_SECURE_NO_WARNINGS)
 
@@ -139,7 +136,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "lib")
 
 
 
-IF( WIN32 )
+if( WIN32 )
 add_executable(RAPI_EXE WIN32 ${SOURCE_FILES})
 target_link_libraries(RAPI_EXE ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIES})
 else()
@@ -154,7 +151,7 @@ else()
     include_directories(${GLFW_INCLUDE_DIRS})
     add_executable(rapi_test ${SOURCE_FILES})
     target_link_libraries(rapi_test ${OPENGL_LIBRARIES} ${GLEW_LIBRARIES} ${GLFW_STATIC_LIBRARIES})
-ENDIF()
+endif()
 
 
 
@@ -167,7 +164,7 @@ set_target_properties(RAPI_GL PROPERTIES
 target_link_libraries(RAPI_GL ${OPENGL_LIBRARIES} ${DX11_LIBRARIES} ${GLEW_LIBRARIES})
 target_compile_options(RAPI_GL PUBLIC -DRND_GL)
 
-IF( WIN32 )
+if( WIN32 )
 	add_library(RAPI_DX STATIC ${SOURCE_FILES})
 
 	set_target_properties(RAPI_DX PROPERTIES

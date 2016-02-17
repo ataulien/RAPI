@@ -208,7 +208,7 @@ namespace RAPI
 		{
 			byte* data = (byte *)hData;
 			size_t hash = 0;
-			for(int i=0;i<sizeInBytes;i+=4)
+			for(unsigned int i=0;i<(unsigned int)sizeInBytes;i+=4)
 			{
 				RDWORD d;
 				((char *)&d)[0] = data[i];

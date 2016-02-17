@@ -27,7 +27,7 @@ using namespace RAPI;
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
-#define DEBUG_D3D11
+//#define DEBUG_D3D11
 
 const ETextureFormat DEFAULT_BACKBUFFER_FORMAT = ETextureFormat::TF_R8G8B8A8;
 
