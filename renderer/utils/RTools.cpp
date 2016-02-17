@@ -21,10 +21,10 @@ void RTools::MakeDefaultStates(RDepthStencilState **defDSS, RSamplerState **defS
                        RRasterizerState **defRS)
 {
     // Create the default versions of the states
-    REngine::ResourceCache->AddToCache("default", GetState(RDepthStencilStateInfo().SetDefault()));
-    REngine::ResourceCache->AddToCache("default", GetState(RSamplerStateInfo().SetDefault()));
-    REngine::ResourceCache->AddToCache("default", GetState(RBlendStateInfo().SetDefault()));
-    REngine::ResourceCache->AddToCache("default", GetState(RRasterizerStateInfo().SetDefault()));
+    if(defDSS) REngine::ResourceCache->AddToCache("default", GetState(RDepthStencilStateInfo().SetDefault()));
+	if(defSS) REngine::ResourceCache->AddToCache("default", GetState(RSamplerStateInfo().SetDefault()));
+	if(defBS) REngine::ResourceCache->AddToCache("default", GetState(RBlendStateInfo().SetDefault()));
+	if(defRS) REngine::ResourceCache->AddToCache("default", GetState(RRasterizerStateInfo().SetDefault()));
 
     // Create some specific ones
     RRasterizerStateInfo rsinfo = RRasterizerStateInfo().SetDefault();
@@ -32,8 +32,8 @@ void RTools::MakeDefaultStates(RDepthStencilState **defDSS, RSamplerState **defS
     REngine::ResourceCache->AddToCache("twosided", GetState(rsinfo));
 
     // And output
-    *defDSS = GetState(RDepthStencilStateInfo().SetDefault());
-    *defSS = GetState(RSamplerStateInfo().SetDefault());
-    *defRS = GetState(RRasterizerStateInfo().SetDefault());
-    *defBS = GetState(RBlendStateInfo().SetDefault());
+	if(defDSS) *defDSS = GetState(RDepthStencilStateInfo().SetDefault());
+	if(defSS) *defSS = GetState(RSamplerStateInfo().SetDefault());
+	if(defBS) *defRS = GetState(RRasterizerStateInfo().SetDefault());
+	if(defRS) *defBS = GetState(RBlendStateInfo().SetDefault());
 }

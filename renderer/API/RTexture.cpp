@@ -28,7 +28,8 @@ bool RTexture::CreateTexture(const void *textureData,
 	// Get information from DDS-Header
 	if(textureFormat == ETextureFormat::TF_FORMAT_UNKNOWN_DXT)
 	{
-		SetFromDDSHeader((DDSURFACEDESC2*)textureData);
+		SetFromDDSHeader((DDSURFACEDESC2*)(((char*)textureData) + 4));
+		textureData = ((char*)textureData) + sizeof(uint32_t) + sizeof(DDSURFACEDESC2);
 	}
 	else
 	{	
@@ -136,7 +137,7 @@ bool RTexture::SetFromDDSHeader(const RAPI::DDSURFACEDESC2* desc)
 
 	// Assign data
 	SizeInBytes = GetDDSStorageRequirements(Resolution.x, Resolution.y, TextureFormat == ETextureFormat::TF_DXT1);
-	NumMipLevels = desc->dwMipMapCount;
-
+	//NumMipLevels = desc->dwMipMapCount;
+	NumMipLevels = 1;
 	return true;
 }

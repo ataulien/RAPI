@@ -128,7 +128,7 @@ namespace RAPI
         for (std::thread& t : workers)
         {
             // Query windows for the thread ID
-            ids.push_back(GetThreadId(t.native_handle()));
+            ids.push_back(GetThreadId(reinterpret_cast<void*>(t.native_handle())));
         }
         return ids;
 #else
