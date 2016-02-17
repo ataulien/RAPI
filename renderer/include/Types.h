@@ -21,6 +21,12 @@ namespace RAPI
 		RFloat2()
 		{ }
 
+		RFloat2(float* f)
+		{ 
+			this->x = f[0];
+			this->y = f[1];
+		}
+
 		RFloat2(float x, float y)
 		{
 			this->x = x;
@@ -35,6 +41,13 @@ namespace RAPI
 	{
 		RFloat3()
 		{ }
+
+		RFloat3(float* f)
+		{ 
+			this->x = f[0];
+			this->y = f[1];
+			this->z = f[2];
+		}
 
 		RFloat3(float x, float y, float z)
 		{
@@ -53,6 +66,14 @@ namespace RAPI
 		RFloat4()
 		{ }
 
+		RFloat4(float* f)
+		{ 
+			this->x = f[0];
+			this->y = f[1];
+			this->z = f[2];
+			this->w = f[3];
+		}
+
 		RFloat4(float x, float y, float z, float w)
 		{
 			this->x = x;
@@ -70,6 +91,12 @@ namespace RAPI
 	// Simple 4x4 RMatrix
 	struct RMatrix
 	{
+		RMatrix(){}
+		RMatrix(float* f)
+		{ 
+			memcpy(m, f, sizeof(RMatrix));
+		}
+
 		float m[16];
 	};
 
