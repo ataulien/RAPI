@@ -8,7 +8,7 @@ option(RAPI_D3D11 "Enable RAPI-D3D11-Build" ON)
 
 if( WIN32 )
 	
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP /DEBUG")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 	
 	if(RAPI_D3D11)
 		SET( PSDK_PATH "C:/Program Files/Microsoft Platform SDK/Bin" )
