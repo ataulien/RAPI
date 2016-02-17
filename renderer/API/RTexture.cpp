@@ -25,11 +25,20 @@ bool RTexture::CreateTexture(const void *textureData,
                              unsigned int arraySize,
                              std::vector<void *> mipData)
 {
-    // Assign data
-    TextureFormat = textureFormat;
-    SizeInBytes = sizeInBytes;
-    Resolution = resolution;
-    NumMipLevels = numMipLevels;
+	// Get information from DDS-Header
+	if(textureFormat == ETextureFormat::TF_FORMAT_UNKNOWN_DXT)
+	{
+		SetFromDDSHeader((DDSURFACEDESC2*)textureData);
+	}
+	else
+	{	
+		TextureFormat = textureFormat;
+		SizeInBytes = sizeInBytes;
+		Resolution = resolution;
+		NumMipLevels = numMipLevels;
+	}
+
+	// Assign data  
     BindFlags = bindFlags;
     UsageFlags = usageFlags;
     ArraySize = arraySize;
@@ -94,4 +103,40 @@ void RTexture::Deallocate()
 bool RTexture::IsInitialized()
 {
     return IsFullyInitialized;
+}
+
+/** 
+* Sets file information from a given DDS-Header
+*/
+bool RTexture::SetFromDDSHeader(const RAPI::DDSURFACEDESC2* desc)
+{
+	// Find DXT-Format
+	if((desc->ddpfPixelFormat.dwFlags & DDPF_FOURCC) == DDPF_FOURCC)
+	{
+		switch(desc->ddpfPixelFormat.dwFourCC)
+		{
+		case RAPI_FOURCC_DXT1:
+			TextureFormat = ETextureFormat::TF_DXT1;
+			break;
+		case RAPI_FOURCC_DXT2:
+		case RAPI_FOURCC_DXT3:
+			TextureFormat = ETextureFormat::TF_DXT3;
+			break;
+		case RAPI_FOURCC_DXT4:
+		case RAPI_FOURCC_DXT5:
+			TextureFormat = ETextureFormat::TF_DXT5;
+			break;
+		}
+	}else
+	{
+		return false;
+	}
+
+	Resolution = RInt2(desc->dwWidth, desc->dwHeight);
+
+	// Assign data
+	SizeInBytes = GetDDSStorageRequirements(Resolution.x, Resolution.y, TextureFormat == ETextureFormat::TF_DXT1);
+	NumMipLevels = desc->dwMipMapCount;
+
+	return true;
 }

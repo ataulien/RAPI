@@ -32,6 +32,9 @@ namespace RAPI
 
 		static uint32_t ComputeRowPitchBytes(int mip, const RInt2 &resolution, ETextureFormat format);
 
+		/** Returns the size of a DDS-Image in bytes */
+		static unsigned int GetDDSStorageRequirements(unsigned int width, unsigned int height, bool dxt1);
+
 		/**
          * Getters
          */

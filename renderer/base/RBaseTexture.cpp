@@ -20,7 +20,7 @@ RBaseTexture::~RBaseTexture()
 }
 
 /** Returns the size of a DDS-Image in bytes */
-unsigned int GetDDSStorageRequirements(unsigned int width, unsigned int height, bool dxt1)
+unsigned int RBaseTexture::GetDDSStorageRequirements(unsigned int width, unsigned int height, bool dxt1)
 {
 	// compute the storage requirements
 	int blockcount = ( ( width + 3 )/4 ) * ( ( height + 3 )/4 );

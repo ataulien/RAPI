@@ -67,6 +67,12 @@ namespace RAPI
 		 * Returns wheather this texture is currently initialized and ready for use
 		 */
 		bool IsInitialized();
+
+	private:
+		/** 
+		 * Sets file information from a given DDS-Header
+		 */
+		bool SetFromDDSHeader(const RAPI::DDSURFACEDESC2* desc);
 	};
 
 }

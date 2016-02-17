@@ -310,7 +310,7 @@ namespace RAPI
 		TF_FORMAT_R32_TYPELESS = 39,
 		TF_FORMAT_D32_FLOAT = 40,
 		TF_FORMAT_R32_FLOAT = 41,
-		TF_FORMAT_UNKNOWN
+		TF_FORMAT_UNKNOWN_DXT
 	};
 
 // Same as DXGI_FORMAT
@@ -492,4 +492,76 @@ namespace RAPI
 		DCT_DrawIndexedInstanced = 3
 	};
 
+	/* OpenZE additions */
+#ifndef RAPI_MAKEFOURCC
+#define RAPI_MAKEFOURCC(ch0, ch1, ch2, ch3)                              \
+                ((uint32_t)(uint8_t)(ch0) | ((uint32_t)(uint8_t)(ch1) << 8) |   \
+                ((uint32_t)(uint8_t)(ch2) << 16) | ((uint32_t)(uint8_t)(ch3) << 24 ))
+#endif
+	/*
+	* FOURCC codes for DX compressed-texture pixel formats
+	*/
+	#define RAPI_FOURCC_DXT1  (RAPI_MAKEFOURCC('D','X','T','1'))
+	#define RAPI_FOURCC_DXT2  (RAPI_MAKEFOURCC('D','X','T','2'))
+	#define RAPI_FOURCC_DXT3  (RAPI_MAKEFOURCC('D','X','T','3'))
+	#define RAPI_FOURCC_DXT4  (RAPI_MAKEFOURCC('D','X','T','4'))
+	#define RAPI_FOURCC_DXT5  (RAPI_MAKEFOURCC('D','X','T','5'))
+
+	enum {
+		DDSD_CAPS = 0x00000001l,
+		DDSD_HEIGHT = 0x00000002l,
+		DDSD_WIDTH = 0x00000004l,
+		DDSD_PITCH = 0x00000008l,
+		DDSD_ALPHABITDEPTH = 0x00000080l,
+		DDSD_PIXELFORMAT = 0x00001000l,
+		DDSD_MIPMAPCOUNT = 0x00020000l,
+		DDSD_LINEARSIZE = 0x00080000l,
+		DDSD_DEPTH = 0x00800000l
+	};
+
+	enum {
+		DDSCAPS_ALPHA = 0x00000002l, // alpha only surface
+		DDSCAPS_COMPLEX = 0x00000008l, // complex surface structure
+		DDSCAPS_TEXTURE = 0x00001000l, // used as texture (should always be set)
+		DDSCAPS_MIPMAP = 0x00400000l  // Mipmap present
+	};
+
+	typedef struct tagDDPIXELFORMAT {
+		uint32_t dwSize;	// size of this structure (must be 32)
+		uint32_t dwFlags;	// see DDPF_*
+		uint32_t dwFourCC;
+		uint32_t dwRGBBitCount;	// Total number of bits for RGB formats
+		uint32_t dwRBitMask;
+		uint32_t dwGBitMask;
+		uint32_t dwBBitMask;
+		uint32_t dwRGBAlphaBitMask;
+	} DDPIXELFORMAT;
+
+	typedef struct tagDDCAPS2 {
+		uint32_t dwCaps1;	// Zero or more of the DDSCAPS_* members
+		uint32_t dwCaps2;	// Zero or more of the DDSCAPS2_* members
+		uint32_t dwReserved[2];
+	} DDCAPS2;
+
+	enum {
+		DDPF_ALPHAPIXELS = 0x00000001l,	// surface has alpha channel
+		DDPF_ALPHA = 0x00000002l,	// alpha only
+		DDPF_FOURCC = 0x00000004l,	// FOURCC available
+		DDPF_RGB = 0x00000040l,	// RGB(A) bitmap
+		DDPF_PALETTEINDEXED8 = 0x00000020l
+	};
+
+	typedef struct tagDDSURFACEDESC2 {
+		uint32_t dwSize;	// size of this structure (must be 124)
+		uint32_t dwFlags;	// combination of the DDSS_* flags
+		uint32_t dwHeight;
+		uint32_t dwWidth;
+		uint32_t dwPitchOrLinearSize;
+		uint32_t dwDepth;	// Depth of a volume texture
+		uint32_t dwMipMapCount;
+		uint32_t dwReserved1[11];
+		DDPIXELFORMAT ddpfPixelFormat;
+		DDCAPS2 ddsCaps;
+		uint32_t dwReserved2;
+	} DDSURFACEDESC2;
 }
