@@ -1,6 +1,6 @@
 #include "pch.h"
 
-#ifndef WIN32
+#if !(defined(WIN32) || defined(_WIN32))
 
 int main(int argc, char** argv)
 {
@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 #include <REngine.h>
 #include <GLFW/glfw3.h>
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 #define GLFW_EXPOSE_NATIVE_WGL
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
@@ -153,7 +153,7 @@ void RunApp(GLFWwindow* window)
 	REngine::ResourceCache->DeleteResource(b);
 }
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 int WINAPI WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow )
 #else
 int main(int argc, char** argv)

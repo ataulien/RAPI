@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 #include <wrl.h>
 #endif
 
@@ -8,7 +8,7 @@
 
 const int R_NUM_FRAMES_TO_MIDDLE = 32;
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 class RTimer
 {
 private:

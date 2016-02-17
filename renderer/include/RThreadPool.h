@@ -123,7 +123,7 @@ namespace RAPI
 
     inline std::vector<size_t> RThreadPool::getThreadIDs()
     {
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
         std::vector<size_t> ids;
         for (std::thread& t : workers)
         {

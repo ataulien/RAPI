@@ -34,7 +34,7 @@ namespace RAPI
 		/** Initializes the tweakbar */
 		bool Init();
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 		/** On window message */
 		LRESULT OnWindowMessage(WindowHandle hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif

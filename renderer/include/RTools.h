@@ -61,7 +61,7 @@ namespace RAPI
 		/** Returns the ID of the calling thread */
 		static uint32_t GetCurrentThreadId()
 		{
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
             return ::GetCurrentThreadId();
 #else
 			return pthread_self();

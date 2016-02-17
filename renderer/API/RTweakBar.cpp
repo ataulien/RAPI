@@ -17,7 +17,7 @@ namespace RAPI
 
 #ifdef USE_TWEAK_BAR
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
 #pragma comment(lib, "AntTweakBar.lib")
 #endif
 
@@ -34,7 +34,7 @@ namespace RAPI
                 TwDraw();
         }
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
         /** On window message */
         LRESULT RTweakBar::OnWindowMessage(WindowHandle hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
@@ -141,7 +141,7 @@ namespace RAPI
     {
     }
 
-#ifdef WIN32
+#if defined(WIN32) || defined(_WIN32)
     /** On window message */
         LRESULT RTweakBar::OnWindowMessage(WindowHandle hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
