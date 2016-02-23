@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <string.h>
 
 /** Defines types used for the project */
 
