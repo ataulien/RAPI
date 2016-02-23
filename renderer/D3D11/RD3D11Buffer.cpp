@@ -31,7 +31,7 @@ RD3D11Buffer::~RD3D11Buffer()
 /** 
 * Creates the vertexbuffer with the given arguments
 */
-bool RD3D11Buffer::CreateBufferAPI(void * initData)
+bool RD3D11Buffer::CreateBufferAPI(const void * initData)
 {
 	unsigned int buffersToCreate = 1;
 
@@ -129,7 +129,7 @@ bool RD3D11Buffer::UnmapAPI()
  * Updates the data of this buffer. If this isn't a dynamic resource, it will still try to update
  * the resource, but using a slower path
  */
-bool RD3D11Buffer::UpdateDataAPI(void* data, size_t dataSize)
+bool RD3D11Buffer::UpdateDataAPI(const void* data, size_t dataSize)
 {
 	if(dataSize != 0 && dataSize > GetSizeInBytes())
 	{

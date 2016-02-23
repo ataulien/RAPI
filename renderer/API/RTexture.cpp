@@ -29,7 +29,7 @@ bool RTexture::CreateTexture(const void *textureData,
 	if(textureFormat == ETextureFormat::TF_FORMAT_UNKNOWN_DXT)
 	{
 		SetFromDDSHeader((DDSURFACEDESC2*)(((char*)textureData) + 4));
-		textureData = ((char*)textureData) + sizeof(uint32_t) + sizeof(DDSURFACEDESC2);
+		MemoryContainsDDSHeader = true;
 	}
 	else
 	{	

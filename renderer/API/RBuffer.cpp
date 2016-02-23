@@ -60,7 +60,7 @@ bool RBuffer::Unmap()
  * Updates the data of this buffer. If this isn't a dynamic resource, it will still try to update
  * the resource, but using a slower path
  */
-bool RBuffer::UpdateData(void *data, size_t dataSize)
+bool RBuffer::UpdateData(const void *data, size_t dataSize)
 {
     return UpdateDataAPI(data, dataSize);
 }

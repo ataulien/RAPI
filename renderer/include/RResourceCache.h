@@ -68,7 +68,7 @@ namespace RAPI
 			// Remove from cachelist
 			unsigned int id = resource->GetID();
 
-			if (id >= cache.Objects.size())
+			if (cache.Objects.empty())
 				return; // Cache was already deleted in this case. Can happen at the end of the program.
 
 			// Destruct, but keep memory around

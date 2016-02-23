@@ -49,7 +49,7 @@ namespace RAPI
 		 * the resource, but using a slower path. Also, if the newly specified size if greater than 0
 		 * and also greater than the current size, the buffer will be recreated using the specified size
 		 */
-		bool UpdateData(void *data, size_t dataSize = 0);
+		bool UpdateData(const void *data, size_t dataSize = 0);
 
 
 		/**

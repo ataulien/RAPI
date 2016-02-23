@@ -160,4 +160,5 @@ GLuint RGLShader::LinkShaderObjectAPI(RGLShader** shaders, size_t numShaders)
 
 	return program;
 }
+
 #endif

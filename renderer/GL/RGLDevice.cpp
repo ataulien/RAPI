@@ -6,6 +6,7 @@
 #include "RBuffer.h"
 #include "RPixelShader.h"
 #include "RVertexShader.h"
+#include "RTexture.h"
 
 #ifdef RND_GL
 using namespace RAPI;
@@ -154,25 +155,46 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 		shaders[EShaderType::ST_VERTEX] = fs.VertexShader;
 
 	// Link shaders/get a program from cache
+	GLuint shaderProgram = 0;
 	if(!shaders.empty())
 	{
-		glUseProgram(shaders[0]->LinkShaderObjectAPI(shaders.data(), EShaderType::ST_NUM_SHADER_TYPES));
+		shaderProgram = shaders[0]->LinkShaderObjectAPI(shaders.data(), EShaderType::ST_NUM_SHADER_TYPES);
+		glUseProgram(shaderProgram);
 		CheckGlError();
 	}
+
 	// TODO: Do this for all shader stages
 	// TODO: Structured buffers use the same registers as textures. A change of them will
 	// not affect the changed state of the textures.
-	//if(changes.MainTexture)
-	//{
-	//	for(unsigned int i=0;i<fs.Textures[EShaderType::ST_PIXEL].size();i++)
-	//		if (!fs.Textures[EShaderType::ST_PIXEL].empty())
-	//		{
-	//			ID3D11ShaderResourceView* srv = fs.Textures[EShaderType::ST_PIXEL][i] ? 
-	//				fs.Textures[EShaderType::ST_PIXEL][i]->GetShaderResourceView()
-	//				: nullptr;
-	//			context->PSSetShaderResources(i, 1, &srv);
-	//		}
-	//}
+	if(changes.MainTexture)
+	{
+		for(unsigned int i = 0; i < fs.Textures[EShaderType::ST_PIXEL].size(); i++)
+		{
+			GLuint tx = fs.Textures[EShaderType::ST_PIXEL][i] ? 
+				fs.Textures[EShaderType::ST_PIXEL][i]->GetTextureObjectAPI()
+				: GL_INVALID_INDEX;
+
+			if(tx != GL_INVALID_INDEX)
+			{
+				// TODO: Do this once on shader creation
+				GLuint loc = glGetUniformLocation(shaderProgram, (std::string("texture") + std::to_string(i)).c_str());
+				glUniform1i(loc, i);
+				CheckGlError();
+
+
+
+				glActiveTexture(GL_TEXTURE0 + i);
+				glBindTexture(GL_TEXTURE_2D, tx);
+
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+
+				CheckGlError();
+			}
+		}
+	}
 
 
 	if(changes.ConstantBuffers[EShaderType::ST_VERTEX])

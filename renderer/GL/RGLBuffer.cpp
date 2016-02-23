@@ -25,7 +25,7 @@ RAPI::RGLBuffer::~RGLBuffer()
 /**
 * Creates the vertexbuffer with the given arguments
 */
-bool RGLBuffer::CreateBufferAPI(void *initData)
+bool RGLBuffer::CreateBufferAPI(const void *initData)
 {
 	unsigned int buffersToCreate = 1;
 
@@ -90,7 +90,7 @@ bool RGLBuffer::UnmapAPI()
 * Updates the data of this buffer. If this isn't a dynamic resource, it will still try to update
 * the resource, but using a slower path
 */
-bool RGLBuffer::UpdateDataAPI(void *data, size_t dataSize)
+bool RGLBuffer::UpdateDataAPI(const void *data, size_t dataSize)
 {
 	if(dataSize != 0 && dataSize > GetSizeInBytes())
 	{

@@ -10,7 +10,7 @@ RBaseDevice::RBaseDevice()
     QueueCounter = 0;
     DoDrawcalls = true;
 
-    SetMainClearValues(RFloat4(0, 0, 0, 0), 1.0f);
+    SetMainClearValues(RFloat4(0.2f, 0.2f, 0.2f, 0), 1.0f);
 }
 
 

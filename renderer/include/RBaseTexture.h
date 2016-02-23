@@ -83,5 +83,8 @@ namespace RAPI
 
 		// Number of texture we have in a texture array
 		unsigned int ArraySize;
+
+		// Whether the memory this texture is being loaded from contains a dds header
+		bool MemoryContainsDDSHeader;
 	};
 }

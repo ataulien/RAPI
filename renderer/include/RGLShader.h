@@ -24,6 +24,7 @@ namespace RAPI
 		 * Returns the unlinked shaderobject of this 
 		 */
 		GLuint GetShaderObjectAPI(){return ShaderObject;}
+
 	protected:
 		// Unlinked Shader-object
 		GLuint ShaderObject;

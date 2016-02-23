@@ -84,6 +84,8 @@ file(GLOB SOURCE_FILES
         "renderer/GL/*.cpp"
 		"renderer/include/*.h"
         "renderer/include/*.cpp"
+		"lib/nv_dds/*.h"
+        "lib/nv_dds/*.cpp"
 )
 
 if (MSVC)

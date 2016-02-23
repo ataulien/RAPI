@@ -12,6 +12,7 @@ RBaseTexture::RBaseTexture()
 	BindFlags = EBindFlags::B_SHADER_RESOURCE;
 	UsageFlags = EUsageFlags::U_DEFAULT;
 	IsFullyInitialized = false;
+	MemoryContainsDDSHeader = false;
 }
 
 

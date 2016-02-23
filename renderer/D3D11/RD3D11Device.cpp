@@ -27,7 +27,7 @@ using namespace RAPI;
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 
-#define DEBUG_D3D11
+//#define DEBUG_D3D11
 
 const ETextureFormat DEFAULT_BACKBUFFER_FORMAT = ETextureFormat::TF_R8G8B8A8;
 
@@ -491,7 +491,9 @@ bool RD3D11Device::BindPipelineState(const RPipelineState& state, const RStateMa
 				ID3D11ShaderResourceView* srv = fs.Textures[EShaderType::ST_PIXEL][i] ? 
 					fs.Textures[EShaderType::ST_PIXEL][i]->GetShaderResourceView()
 					: nullptr;
-				context->PSSetShaderResources(i, 1, &srv);
+
+				if(srv)
+					context->PSSetShaderResources(i, 1, &srv);
 			}
 	}
 
