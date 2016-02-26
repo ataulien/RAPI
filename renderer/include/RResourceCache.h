@@ -58,6 +58,11 @@ namespace RAPI
 		template<typename T>
 		void DeleteResource(T *r)
 		{
+			// These may get called in destructors and their order can't be possibly foreseen
+			// Not the nicest solution, but it does the job
+			if(!this)
+				return; 
+
 			if (!r)
 				return;
 

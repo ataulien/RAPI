@@ -24,7 +24,7 @@ namespace RAPI
 		{
 			CullMode = CM_CULL_BACK;
 			ZBias = 0;
-			FrontCounterClockwise = false;
+			FrontCounterClockwise = true;
 			Wireframe = false;
 			DepthClipEnable = false;
 

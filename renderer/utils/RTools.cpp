@@ -34,6 +34,6 @@ void RTools::MakeDefaultStates(RDepthStencilState **defDSS, RSamplerState **defS
     // And output
 	if(defDSS) *defDSS = GetState(RDepthStencilStateInfo().SetDefault());
 	if(defSS) *defSS = GetState(RSamplerStateInfo().SetDefault());
-	if(defBS) *defRS = GetState(RRasterizerStateInfo().SetDefault());
-	if(defRS) *defBS = GetState(RBlendStateInfo().SetDefault());
+	if(defRS) *defRS = GetState(RRasterizerStateInfo().SetDefault());
+	if(defBS) *defBS = GetState(RBlendStateInfo().SetDefault());
 }
