@@ -26,8 +26,6 @@ RGLTexture::~RGLTexture()
 */
 bool RGLTexture::CreateFromFileAPI(const std::string& file)
 {
-	HRESULT hr;
-
 	nv_dds::CDDSImage image;
 	image.load(file);
 
@@ -74,7 +72,7 @@ bool RGLTexture::CreateFromFileAPI(const std::string& file)
 		}
 	}
 
-	return hr == S_OK;
+	return true;
 }
 
 /**
@@ -92,8 +90,6 @@ void RGLTexture::DeallocateAPI()
 bool RGLTexture::CreateTextureAPI(const void* textureData,
 	std::vector<void*> mipData)
 {
-	HRESULT hr;
-
 	if(TextureFormat != TF_DXT1 && TextureFormat != TF_DXT3 && TextureFormat != TF_DXT5)
 		return false; // TODO: Implement these!
 
@@ -114,7 +110,7 @@ bool RGLTexture::CreateTextureAPI(const void* textureData,
 	std::istringstream mb(data);
 
 	try{
-		image.load(mb);
+		image.load(mb, false);
 	}
 	catch(std::runtime_error e)
 	{
@@ -137,11 +133,16 @@ bool RGLTexture::CreateTextureAPI(const void* textureData,
 	glBindTexture(GL_TEXTURE_2D, TextureObject);
 	CheckGlError();
 
+	// Optional dds-header skip
+	uint32_t skip = 0;
+	if(MemoryContainsDDSHeader)
+		skip = sizeof(uint32_t) + sizeof(DDSURFACEDESC2);
+
 	if(image.is_compressed())
 	{
 		glCompressedTexImage2DARB(GL_TEXTURE_2D, 0, image.get_format(),
 			image.get_width(), image.get_height(), 0, image.get_size(),
-			image);
+			image.get_data());
 		CheckGlError();
 
 		for(int i = 0; i < image.get_num_mipmaps(); i++)

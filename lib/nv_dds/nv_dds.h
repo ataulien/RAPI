@@ -123,12 +123,19 @@ public:
 
     void upload_textureCubemap();
 
-    operator uint8_t*() {
-        assert(m_valid);
-        assert(!m_images.empty());
+	operator uint8_t*() {
+		assert(m_valid);
+		assert(!m_images.empty());
 
-        return m_images[0];
-    }
+		return m_images[0];
+	}
+
+	uint8_t* get_data() {
+		assert(m_valid);
+		assert(!m_images.empty());
+
+		return m_images[0];
+	}
 
     unsigned int get_width() {
         assert(m_valid);

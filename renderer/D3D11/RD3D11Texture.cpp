@@ -51,10 +51,15 @@ void RD3D11Texture::DeallocateAPI()
 /**
 * Creates the textureobjects for the given API 
 */
-bool RD3D11Texture::CreateTextureAPI(const void* textureData,
+bool RD3D11Texture::CreateTextureAPI(const void* _textureData,
 	std::vector<void*> mipData)
 {
 	HRESULT hr;
+	char* textureData = (char*)_textureData;
+
+	// Skip DDS-Header, if needed
+	if(MemoryContainsDDSHeader)
+		textureData += sizeof(uint32_t) + sizeof(DDSURFACEDESC2);
 
 	// TODO: Allow for more formats
 	if((BindFlags & D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL) != 0)
@@ -99,15 +104,32 @@ bool RD3D11Texture::CreateTextureAPI(const void* textureData,
 
 	subvector[0] = sub;
 
-	// Assign some memory for the mipmaps.
-	// All mips use the original data for now, until they got updated,
-	// because the pSysMem-Pointer needs to be valid
-	for (unsigned int i = 0; i < mipData.size(); i++)
+	if(!MemoryContainsDDSHeader)
 	{
-		ZeroMemory(&subvector[i+1], sizeof(D3D11_SUBRESOURCE_DATA));
-		subvector[i+1].pSysMem = mipData[i];
-		subvector[i+1].SysMemSlicePitch = RBaseTexture::ComputeSizeInBytes(i+1, Resolution, TextureFormat);
-		subvector[i+1].SysMemPitch = ComputeRowPitchBytes(i+1);
+		// Assign some memory for the mipmaps.
+		// All mips use the original data for now, until they got updated,
+		// because the pSysMem-Pointer needs to be valid
+		for(unsigned int i = 0; i < mipData.size(); i++)
+		{
+			ZeroMemory(&subvector[i + 1], sizeof(D3D11_SUBRESOURCE_DATA));
+			subvector[i + 1].pSysMem = mipData[i];
+			subvector[i + 1].SysMemSlicePitch = RBaseTexture::ComputeSizeInBytes(i + 1, Resolution, TextureFormat);
+			subvector[i + 1].SysMemPitch = ComputeRowPitchBytes(i + 1);
+		}
+	}
+	else
+	{
+		// If the memory was a full DDS, extract mips here
+		size_t offset = ComputeSizeInBytes(0);
+		for(uint32_t i = 1; i < NumMipLevels; i++)
+		{
+			ZeroMemory(&subvector[i], sizeof(D3D11_SUBRESOURCE_DATA));
+			subvector[i].pSysMem = textureData + offset;
+			subvector[i].SysMemSlicePitch = RBaseTexture::ComputeSizeInBytes(i, Resolution, TextureFormat);
+			subvector[i].SysMemPitch = ComputeRowPitchBytes(i);
+
+			offset += ComputeSizeInBytes(i);
+		}
 	}
 
 	// Create main resources

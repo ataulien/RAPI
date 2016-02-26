@@ -173,7 +173,7 @@ void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 			break;
 
 		case FORMAT_R8G8B8A8_UNORM:
-			glVertexAttribPointer(i, 4, GL_UNSIGNED_INT, GL_FALSE, StructuredByteSize, (void*)offset);
+			glVertexAttribPointer(i, 4, GL_UNSIGNED_BYTE, GL_TRUE, StructuredByteSize, (void*)offset);
 			offset += sizeof(uint32_t);
 			break;
 
