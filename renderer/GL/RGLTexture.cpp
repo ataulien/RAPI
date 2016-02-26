@@ -4,7 +4,7 @@
 #ifdef RND_GL
 #include "REngine.h"
 #include "Logger.h"
-#include "lib\nv_dds\nv_dds.h"
+#include "lib/nv_dds/nv_dds.h"
 #include <sstream>
 #include <stdexcept>
 
