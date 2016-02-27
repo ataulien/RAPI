@@ -16,7 +16,7 @@ RBuffer::~RBuffer()
 /** 
 * Creates the vertexbuffer with the given arguments
 */
-bool RBuffer::Init(void *initData,
+bool RBuffer::Init(const void *initData,
                    unsigned int sizeInBytes,
                    unsigned int structuredByteSize,
                    EBindFlags bindFlags,
