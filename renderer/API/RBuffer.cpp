@@ -37,7 +37,7 @@ bool RBuffer::Init(const void *initData,
 /**
 * Maps the texture for update. Only possible with the right CPU-Acces and usage-flags.
 */
-bool RBuffer::Map(const void **dataOut)
+bool RBuffer::Map(void **dataOut)
 {
     if (!MapAPI(dataOut))
         return false;

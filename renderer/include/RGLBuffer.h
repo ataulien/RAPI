@@ -25,7 +25,7 @@ namespace RAPI
         /**
         * Maps the texture for update. Only possible with the right CPU-Acces and usage-flags.
         */
-        bool MapAPI(const void **dataOut);
+        bool MapAPI(void **dataOut);
 
         /**
         * Unmaps the texture

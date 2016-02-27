@@ -53,7 +53,7 @@ bool RGLBuffer::CreateBufferAPI(const void *initData)
 /**
 * Maps the texture for update. Only possible with the right CPU-Acces and usage-flags.
 */
-bool RGLBuffer::MapAPI(const void **dataOut)
+bool RGLBuffer::MapAPI(void **dataOut)
 {
 	// Switch buffers if needed to avoid cpu stall
 	TrySwitchBuffers();
