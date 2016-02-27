@@ -132,12 +132,12 @@ void RGLBuffer::DeallocateAPI()
 */
 void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 {
-	// Get input element desc
-	const INPUT_ELEMENT_DESC* desc = inputLayout->GetInputElementDesc();
-
 	// Already initialized?
 	if(VertexArrayObject || BindFlags != GL_ARRAY_BUFFER)
 		return;
+
+	// Get input element desc
+	const INPUT_ELEMENT_DESC* desc = inputLayout->GetInputElementDesc();
 
 	// Create VAO
 	glGenVertexArrays(1, &VertexArrayObject);

@@ -4,6 +4,7 @@
 #include "RD3D11Shader.h"
 #include "Logger.h"
 #include "REngine.h"
+#include "RDevice.h"
 
 #pragma comment(lib, "d3dx11.lib")
 

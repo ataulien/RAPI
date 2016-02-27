@@ -1,7 +1,7 @@
 #pragma once
 
 #if !defined(RND_GL) && !defined(RND_D3D11)
-#define RND_GL
+#define RND_NULL
 #endif
 
 #ifdef RND_D3D11

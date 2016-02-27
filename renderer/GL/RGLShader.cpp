@@ -158,6 +158,32 @@ GLuint RGLShader::LinkShaderObjectAPI(RGLShader** shaders, size_t numShaders)
 
 	ProgramMap[hash] = program;
 
+	glUseProgram(program);
+
+	// Setup binding points
+	for(int i=0;;i++)
+	{
+		GLuint sd = glGetUniformBlockIndex(program, ("buffer" + std::to_string(i)).c_str());
+
+		if(sd == GL_INVALID_INDEX)
+			break;
+
+		glUniformBlockBinding(program, sd, i);
+		CheckGlError();
+	}
+
+	// Setup texture bindings
+	for(int i=0;;i++)
+	{
+		GLuint sd = glGetUniformLocation(program, ("texture" + std::to_string(i)).c_str());
+
+		if(sd == GL_INVALID_INDEX)
+			break;
+
+		glUniform1i(sd, i);
+		CheckGlError();
+	}
+
 	return program;
 }
 

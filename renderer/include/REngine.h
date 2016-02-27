@@ -1,5 +1,6 @@
 #pragma once
-#include "RDevice.h"
+
+#include "Types.h"
 
 namespace RAPI
 {

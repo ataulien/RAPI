@@ -1,5 +1,8 @@
 #pragma once
 #include "RResource.h"
+#include <set>
+#include <unordered_map>
+#include <vector>
 
 namespace RAPI
 {

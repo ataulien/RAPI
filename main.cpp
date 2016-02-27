@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 #include <RStateMachine.h>
 #include <RPixelShader.h>
 #include <RVertexShader.h>
-
+#include <RDevice.h>
 #include <RInputLayout.h>
 #include "logger.h"
 

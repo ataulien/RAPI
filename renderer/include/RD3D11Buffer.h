@@ -1,6 +1,7 @@
 #pragma once
 #include "RBaseBuffer.h"
 #ifdef RND_D3D11
+#include "pch.h"
 
 namespace RAPI
 {

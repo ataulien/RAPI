@@ -6,6 +6,7 @@
 #include "REngine.h"
 #include "Logger.h"
 #include "RVertexShader.h"
+#include "RDevice.h"
 
 using namespace RAPI;
 

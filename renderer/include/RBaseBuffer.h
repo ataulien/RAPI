@@ -1,5 +1,7 @@
 #pragma once
+#include "pch.h"
 #include "RResource.h"
+#include "Types.h"
 
 namespace RAPI
 {

@@ -4,6 +4,7 @@
 #include "RD3D11Texture.h"
 #include "REngine.h"
 #include "Logger.h"
+#include "RDevice.h"
 
 #pragma comment(lib, "d3dx11.lib")
 

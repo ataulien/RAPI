@@ -6,6 +6,7 @@
 #include "REngine.h"
 #include "Logger.h"
 #include "RD3D11SyncCheck.h"
+#include "RDevice.h"
 
 using namespace RAPI;
 

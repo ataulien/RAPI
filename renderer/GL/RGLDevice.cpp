@@ -114,8 +114,18 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 	//if(changes.DepthStencilState && fs.DepthStencilState)
 	//	context->OMSetDepthStencilState(fs.DepthStencilState->GetState(), 0);
 
-	//if(changes.SamplerState && fs.SamplerState)
-	//	context->PSSetSamplers(0, 1, fs.SamplerState->GetStatePtr());
+	if(changes.SamplerState && fs.SamplerState)
+	{
+		// TODO: Create actual sampler state object
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); 
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST ); 
+
+		GLfloat aniso = 0.0f;
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &aniso);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, aniso); 
+	}
 
 	for(int i=0;i<2;i++)
 	{
@@ -127,9 +137,16 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 				unsigned int strides[] = { fs.VertexBuffers[i]->GetStructuredByteSize() };
 
 				// Need to update the VAO of this to get the vertexlayout into the buffer
-				fs.VertexBuffers[i]->UpdateVAO(fs.InputLayout);
+				GLuint vao = fs.VertexBuffers[i]->GetVertexArrayObjectAPI();
+
+				// Create vao, if needed
+				if(!vao)
+				{
+					fs.VertexBuffers[i]->UpdateVAO(fs.InputLayout);
+					vao = fs.VertexBuffers[i]->GetVertexArrayObjectAPI();
+				}
+
 				glBindVertexArray(fs.VertexBuffers[i]->GetVertexArrayObjectAPI()); 
-				glBindBuffer(GL_ARRAY_BUFFER, fs.VertexBuffers[i]->GetBufferObjectAPI());
 				CheckGlError();
 			}
 			else
@@ -180,27 +197,11 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 
 			if(tx != GL_INVALID_INDEX)
 			{
-				// TODO: Do this once on shader creation
-				GLuint loc = glGetUniformLocation(shaderProgram, (std::string("texture") + std::to_string(i)).c_str());
-				glUniform1i(loc, i);
-				CheckGlError();
-
-
-
 				glActiveTexture(GL_TEXTURE0 + i);
 				glBindTexture(GL_TEXTURE_2D, tx);
 
 				GLuint maxMip = std::max(1u, fs.Textures[EShaderType::ST_PIXEL][i]->GetNumMipLevels()) - 1;
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, maxMip); 
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); 
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST ); 
-
-				GLfloat aniso = 0.0f;
-				glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &aniso);
-				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, aniso); 
-
 				CheckGlError();
 			}
 		}
@@ -213,23 +214,9 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 		{
 			if(fs.VertexShader && fs.ConstantBuffers[EShaderType::ST_VERTEX][j])
 			{
-				// TODO: Cache the call from LinkShaderObjectAPI above somewhere
-				GLuint program = shaders[0]->LinkShaderObjectAPI(shaders.data(), EShaderType::ST_NUM_SHADER_TYPES);
-
-				GLint numBlocks;
-				glGetProgramiv(program, GL_ACTIVE_UNIFORM_BLOCKS, &numBlocks);
-
 				GLuint ubo = fs.ConstantBuffers[EShaderType::ST_VERTEX][j]->GetBufferObjectAPI();
-				glBindBuffer(GL_UNIFORM_BUFFER, ubo);
-
-				GLuint index = j;
-
-				// TODO: Check if we reach the limit of GL_MAX_UNIFORM_BUFFER_BINDINGS
-				GLuint binding_point_index = program; // indicated by yourself and less than GL_MAX_UNIFORM_BUFFER_BINDINGS
-				glUniformBlockBinding(program, index, binding_point_index);
-
+				glBindBufferBase(GL_UNIFORM_BUFFER, j, ubo);
 				
-				glBindBufferBase(GL_UNIFORM_BUFFER, binding_point_index, ubo);
 				CheckGlError();
 			}
 		}
