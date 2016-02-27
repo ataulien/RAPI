@@ -71,5 +71,10 @@ namespace RAPI
         * Prepares the renderingcontext on the given thread for drawing
         */
 		bool PrepareContextAPI(unsigned int threadId){return true;}
+
+		/**
+		* Returns the resolution needed for the given window
+		*/
+		RInt2 GetWindowResolutionAPI(WindowHandle hWnd){ return RInt2(0, 0) };
 	};
 }

@@ -26,7 +26,7 @@ namespace RAPI
 		/**
 		 * Creates the vertexbuffer with the given arguments
 		 */
-		bool Init(void *initData,
+		bool Init(const void *initData,
 				  unsigned int sizeInBytes,
 				  unsigned int structuredByteSize,
 				  EBindFlags bindFlags = B_VERTEXBUFFER,
