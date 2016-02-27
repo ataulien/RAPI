@@ -65,6 +65,11 @@ namespace RAPI {
 			MainDepthBufferClearZ = z;
 		}
 
+		/**
+		 * Sets whether to do drawcalls (Debugging)
+		 */
+		void SetDoDrawCalls(bool value){ DoDrawcalls = value; }
+
 	protected:
 		// Output-Window for the swapchain
 		WindowHandle OutputWindow;
