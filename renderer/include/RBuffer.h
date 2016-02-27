@@ -37,7 +37,7 @@ namespace RAPI
 		/**
 		* Maps the buffer for update. Only possible with the right CPU-Acces and usage-flags.
 		*/
-		bool Map(void **dataOut);
+		bool Map(const void **dataOut);
 
 		/**
 		* Unmaps the buffer
