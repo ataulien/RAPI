@@ -242,6 +242,14 @@ namespace RAPI
 		U_DYNAMIC = 2,
 		U_IMMUTABLE = 1
 	};
+
+	enum EPrimitiveType
+	{
+		PT_TRIANGLE_LIST = 4,
+		PT_TRIANGLE_STRIP = 5,
+		PT_LINE_LIST = 2,
+		PT_LINE_STRIP = 3
+	};
 #elif defined(RND_GL)
 	/** Layed out for openGL*/
 	enum EBindFlags
@@ -272,6 +280,14 @@ namespace RAPI
 		U_DYNAMIC = 0x88E8,
 		U_IMMUTABLE = 0x88E4
 	};
+
+	enum EPrimitiveType
+	{
+		PT_TRIANGLE_LIST = 4,
+		PT_TRIANGLE_STRIP = 5,
+		PT_LINE_LIST = 1,
+		PT_LINE_STRIP = 3
+	};
 #else
 	enum EBindFlags
 	{
@@ -298,6 +314,14 @@ namespace RAPI
 		U_STAGING,
 		U_DYNAMIC,
 		U_IMMUTABLE
+	};
+
+	enum EPrimitiveType
+	{
+		PT_TRIANGLE_LIST,
+		PT_TRIANGLE_STRIP,
+		PT_LINE_LIST,
+		PT_LINE_STRIP
 	};
 #endif
 
@@ -477,14 +501,6 @@ namespace RAPI
 
 
 // Values for D3D11. // Hint: #ifdef this to match your own rendering API if you want
-	enum EPrimitiveType
-	{
-		PT_TRIANGLE_LIST = 4,
-		PT_TRIANGLE_STRIP = 5,
-		PT_LINE_LIST = 2,
-		PT_LINE_STRIP = 3
-	};
-
 	enum EDrawCallType
 	{
 		DCT_Draw = 0,

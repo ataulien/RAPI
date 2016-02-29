@@ -109,11 +109,6 @@ bool RGLDevice::BindPipelineState(const RPipelineState& _state, const RStateMach
 	std::array<RGLShader*, EShaderType::ST_NUM_SHADER_TYPES> shaders;
 	shaders.fill(0);
 	
-
-
-	//if(changes.PrimitiveType)
-	//	context->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)state.IDs.PrimitiveType);
-
 	//if(changes.RasterizerState && fs.RasterizerState)
 	//	context->RSSetState(fs.RasterizerState->GetState());
 
@@ -290,11 +285,11 @@ bool RGLDevice::DrawPipelineStateAPI(const struct RPipelineState &state,
 		switch(state.IDs.DrawFunctionID)
 		{
 		case EDrawCallType::DCT_Draw:
-			glDrawArrays(GL_TRIANGLES, state.StartVertexOffset, state.NumDrawElements);
+			glDrawArrays(state.IDs.PrimitiveType, state.StartVertexOffset, state.NumDrawElements);
 			break;
 
 		case EDrawCallType::DCT_DrawIndexed:
-			glDrawElements(GL_TRIANGLES, state.NumDrawElements, GL_UNSIGNED_INT, (void*)(state.StartIndexOffset * sizeof(uint32_t))); // TODO: Support GL_UNSIGNED_SHORT
+			glDrawElements(state.IDs.PrimitiveType, state.NumDrawElements, GL_UNSIGNED_INT, (void*)(state.StartIndexOffset * sizeof(uint32_t))); // TODO: Support GL_UNSIGNED_SHORT
 			break;
 
 		case EDrawCallType::DCT_DrawIndexedInstanced:

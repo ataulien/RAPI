@@ -249,9 +249,6 @@ bool RD3D11Device::PresentAPI()
 	// TODO: VSync! DXGISwapChain->Present(1, 0)
 
 	DXGISwapChain->Present(0, 0); 
-
-	FrameCounter++;
-
 	return true;
 }
 

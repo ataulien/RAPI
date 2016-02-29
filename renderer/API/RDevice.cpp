@@ -145,6 +145,8 @@ bool RDevice::Present()
 	std::string profilerOutput;
 
 	Profiler.EndFrame(profilerOutput);
+
+	FrameCounter++;
 	return r;
 }
 
