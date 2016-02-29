@@ -65,7 +65,7 @@ namespace RAPI
 		/**
 		 * Returns a list of available display modes
 		 */
-		bool GetDisplayModeListAPI(std::vector<DisplayModeInfo> &modeList, bool includeSuperSampling = false){}
+		bool GetDisplayModeListAPI(std::vector<DisplayModeInfo> &modeList, bool includeSuperSampling = false){return true;}
 
 		/**
         * Prepares the renderingcontext on the given thread for drawing

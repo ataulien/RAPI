@@ -60,6 +60,11 @@ namespace RAPI {
 		bool OnFrameEnd();
 
 		/**
+		 * Resizes the swapchain to match the windows size
+		 */
+		bool OnResize();
+
+		/**
          * Presents the backbuffer on screen
          */
 		bool Present();
@@ -117,9 +122,7 @@ namespace RAPI {
          */
 		unsigned int GetNumRegisteredDrawCalls();
 
-		/**
-         * Flushes actions from the given thread-ID
-         */
+
 
 		/**
          * Returns the current main output window

@@ -58,7 +58,8 @@ bool RGLDevice::SetWindowAPI()
 
 bool RGLDevice::OnResizeAPI()
 {
-    return false;
+	glViewport(0, 0, OutputResolution.x, OutputResolution.y);
+    return true;
 }
 
 bool RGLDevice::OnFrameStartAPI()
@@ -95,13 +96,21 @@ bool RGLDevice::PresentAPI()
 /**
 * Binds the resources of the given pipeline state
 */
-bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachine::ChangesStruct& changes, RStateMachine& stateMachine)
+bool RGLDevice::BindPipelineState(const RPipelineState& _state, const RStateMachine::ChangesStruct& _changes, RStateMachine& stateMachine)
 {
+	RStateMachine::ChangesStruct& changes = (RStateMachine::ChangesStruct&)_changes;
+	RPipelineState& state = (RPipelineState&)_state;
+	//changes.MainTexture = false;
+	//changes.VertexBuffers[0] = false;
+	//changes.ConstantBuffers[0] = false;
+
 	stateMachine.SetFromPipelineState(&state, changes);
 	const RPipelineStateFull& fs = stateMachine.GetCurrentState();
 	std::array<RGLShader*, EShaderType::ST_NUM_SHADER_TYPES> shaders;
 	shaders.fill(0);
 	
+
+
 	//if(changes.PrimitiveType)
 	//	context->IASetPrimitiveTopology((D3D11_PRIMITIVE_TOPOLOGY)state.IDs.PrimitiveType);
 
@@ -120,7 +129,7 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); 
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST ); 
+		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR ); 
 
 		GLfloat aniso = 0.0f;
 		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &aniso);
@@ -159,9 +168,8 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 		}
 	}
 
-	//if(changes.IndexBuffer && fs.IndexBuffer)
-	//	context->IASetIndexBuffer(fs.IndexBuffer->GetBuffer(), 
-	//		fs.IndexBuffer->GetStructuredByteSize() == 2 ? DXGI_FORMAT_R16_UINT : DXGI_FORMAT_R32_UINT, 0);
+	if(changes.IndexBuffer && fs.IndexBuffer)
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fs.IndexBuffer->GetBufferObjectAPI());
 
 	/*if(changes.PixelShader && fs.PixelShader)
 		shaders.push_back(fs.PixelShader);
@@ -202,6 +210,16 @@ bool RGLDevice::BindPipelineState(const RPipelineState& state, const RStateMachi
 
 				GLuint maxMip = std::max(1u, fs.Textures[EShaderType::ST_PIXEL][i]->GetNumMipLevels()) - 1;
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, maxMip); 
+
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT ); 
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+				glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR ); 
+
+				GLfloat aniso = 0.0f;
+				glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &aniso);
+				glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, aniso / 2); 
+
 				CheckGlError();
 			}
 		}
@@ -272,11 +290,11 @@ bool RGLDevice::DrawPipelineStateAPI(const struct RPipelineState &state,
 		switch(state.IDs.DrawFunctionID)
 		{
 		case EDrawCallType::DCT_Draw:
-			glDrawArrays(GL_TRIANGLES, 0, state.NumDrawElements);
+			glDrawArrays(GL_TRIANGLES, state.StartVertexOffset, state.NumDrawElements);
 			break;
 
 		case EDrawCallType::DCT_DrawIndexed:
-			//context->DrawIndexed(state.NumDrawElements, state.StartIndexOffset, state.StartVertexOffset);
+			glDrawElements(GL_TRIANGLES, state.NumDrawElements, GL_UNSIGNED_INT, (void*)(state.StartIndexOffset * sizeof(uint32_t))); // TODO: Support GL_UNSIGNED_SHORT
 			break;
 
 		case EDrawCallType::DCT_DrawIndexedInstanced:

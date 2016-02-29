@@ -15,6 +15,7 @@
 #include "RVertexShader.h"
 #include "RInputLayout.h"
 #include "RViewport.h"
+#include "RTools.h"
 
 namespace RAPI
 {
@@ -110,19 +111,19 @@ namespace RAPI
 		}
 
 		for (int i = 0; i < EShaderType::ST_NUM_SHADER_TYPES; i++) {
-			if (!state->ConstantBuffers[i].empty() && State.ConstantBuffers[i] != state->ConstantBuffers[i]) {
-				State.ConstantBuffers[i] = state->ConstantBuffers[i];
+			if (state->_NumConstantBuffers[i] && state->_ConstantBuffersHash != State._ConstantBuffersHash) {
+				memcpy(&State.ConstantBuffers[i], &state->ConstantBuffers[i], state->_NumConstantBuffers[i] * sizeof(state->ConstantBuffers[i]));	
 				Changes.ConstantBuffers[i] = true;
 				ChangesCount.ConstantBuffers[i]++;
 			}
-
-			if (!state->StructuredBuffers[i].empty() && State.StructuredBuffers[i] != state->StructuredBuffers[i]) {
-				State.StructuredBuffers[i] = state->StructuredBuffers[i];
+			if (state->_NumStructuredBuffers[i] && state->_StructuredBuffersHash != State._StructuredBuffersHash) {
+				memcpy(&State.StructuredBuffers[i], &state->StructuredBuffers[i], state->_NumStructuredBuffers[i] * sizeof(state->StructuredBuffers[i]));	
 				Changes.StructuredBuffers[i] = true;
 				ChangesCount.StructuredBuffers[i]++;
 			}
 
-			if (!state->Textures[i].empty() && State.Textures[i] != state->Textures[i]) {
+			if (state->_NumTextures[i] && state->_TexturesHash != State._TexturesHash) {
+				memcpy(&State.Textures[i], &state->Textures[i], state->_NumTextures[i] * sizeof(state->Textures[i]));	
 				State.Textures[i] = state->Textures[i];
 				Changes.MainTexture = true;
 				ChangesCount.MainTexture++;
@@ -182,15 +183,15 @@ namespace RAPI
 
 		for (int i = 0; i < EShaderType::ST_NUM_SHADER_TYPES; i++) {
 			if (changes.ConstantBuffers[i]) {
-				State.ConstantBuffers[i] = state->ConstantBuffers[i];
+				memcpy(&State.ConstantBuffers[i], &state->ConstantBuffers[i], state->_NumConstantBuffers[i] * sizeof(state->ConstantBuffers[i]));				
 			}
 
 			if (changes.StructuredBuffers[i]) {
-				State.StructuredBuffers[i] = state->StructuredBuffers[i];
+				memcpy(&State.StructuredBuffers[i], &state->StructuredBuffers[i], state->_NumStructuredBuffers[i] * sizeof(state->StructuredBuffers[i]));	
 			}
 
 			if (changes.MainTexture) {
-				State.Textures[i] = state->Textures[i];
+				memcpy(&State.Textures[i], &state->Textures[i], state->_NumTextures[i] * sizeof(state->Textures[i]));	
 			}
 		}
 
@@ -211,14 +212,42 @@ namespace RAPI
 
 		for (int i = 0; i < EShaderType::ST_NUM_SHADER_TYPES; i++) {
 			state->ConstantBuffers[i] = State.ConstantBuffers[i];
+			state->_NumConstantBuffers[i] = 0;
+
+			// Count resources
+			for(int j=0;j<RAPI_MAX_NUM_SHADER_RESOURCES;j++)
+				if(state->ConstantBuffers[i][j])
+					state->_NumConstantBuffers[i] = j + 1;
+
+			// Generate hash		
+			state->_ConstantBuffersHash[i] = RTools::HashObject(state->ConstantBuffers[i]);
 		}
 
 		for (int i = 0; i < EShaderType::ST_NUM_SHADER_TYPES; i++) {
 			state->Textures[i] = State.Textures[i];
+			state->_NumTextures[i] = 0;
+
+			// Count resources
+			for(int j=0;j<RAPI_MAX_NUM_SHADER_RESOURCES;j++)
+				if(state->Textures[i][j])
+					state->_NumTextures[i] = j + 1;
+
+			// Generate hash		
+			state->_TexturesHash[i] = RTools::HashObject(state->Textures[i]);
 		}
 
 		for (int i = 0; i < EShaderType::ST_NUM_SHADER_TYPES; i++) {
 			state->StructuredBuffers[i] = State.StructuredBuffers[i];
+			state->_NumStructuredBuffers[i] = 0;
+
+			// Count resources
+			for(int j=0;j<RAPI_MAX_NUM_SHADER_RESOURCES;j++)
+				if(state->StructuredBuffers[i][j])
+					state->_NumStructuredBuffers[i] = j + 1;
+
+			// Generate hash		
+			state->_StructuredBuffersHash[i] = RTools::HashObject(state->StructuredBuffers[i]);
+			
 		}
 
 		state->IDs = State.BoundIDs;

@@ -46,7 +46,7 @@ namespace RAPI
 
 		/** Adds a databuffer to this paged buffer and returns a pointer to
 			the created logical buffer. */
-		RLogicalBuffer<T> *AddLogicalBuffer(T *data, unsigned int numElements)
+		RLogicalBuffer<T> *AddLogicalBuffer(const T *data, unsigned int numElements)
 		{
 			RLogicalBuffer<T> *lb = new RLogicalBuffer<T>();
 

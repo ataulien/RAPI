@@ -38,8 +38,13 @@ namespace RAPI
 
 		class RInputLayout *InputLayout;
 
+		uint32_t _StructuredBuffersHash[EShaderType::ST_NUM_SHADER_TYPES];
 		std::array<RBuffer *, RAPI_MAX_NUM_SHADER_RESOURCES> StructuredBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+
+		uint32_t _TexturesHash[EShaderType::ST_NUM_SHADER_TYPES];
 		std::array<RTexture *, RAPI_MAX_NUM_SHADER_RESOURCES> Textures[EShaderType::ST_NUM_SHADER_TYPES];
+
+		uint32_t _ConstantBuffersHash[EShaderType::ST_NUM_SHADER_TYPES];
 		std::array<RBuffer *, RAPI_MAX_NUM_SHADER_RESOURCES> ConstantBuffers[EShaderType::ST_NUM_SHADER_TYPES];
 
 		// States

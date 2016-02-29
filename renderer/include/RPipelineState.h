@@ -106,14 +106,28 @@ namespace RAPI
 		}
 
 		// Textures and constantbuffers
+		uint8_t _NumStructuredBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+		uint32_t _StructuredBuffersHash[EShaderType::ST_NUM_SHADER_TYPES];
 		std::array<class RBuffer *, RAPI_MAX_NUM_SHADER_RESOURCES> StructuredBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+
+		uint8_t _NumTextures[EShaderType::ST_NUM_SHADER_TYPES];
+		uint32_t _TexturesHash[EShaderType::ST_NUM_SHADER_TYPES];
 		std::array<class RTexture *, RAPI_MAX_NUM_SHADER_RESOURCES> Textures[EShaderType::ST_NUM_SHADER_TYPES];
+
+		uint8_t _NumConstantBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+		uint32_t _ConstantBuffersHash[EShaderType::ST_NUM_SHADER_TYPES];
 		std::array<class RBuffer *, RAPI_MAX_NUM_SHADER_RESOURCES> ConstantBuffers[EShaderType::ST_NUM_SHADER_TYPES];
+
 		unsigned int NumDrawElements; // Vertices, indices...
 		unsigned int StartVertexOffset;
 		unsigned int StartIndexOffset;
 		unsigned int StartInstanceOffset;
 		unsigned int NumInstances;
+
+		
+		
+		
+		
 
 		// TODO: Testing only, remove
 		bool Locked;

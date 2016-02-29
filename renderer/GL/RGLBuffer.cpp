@@ -60,7 +60,9 @@ bool RGLBuffer::MapAPI(void **dataOut)
 
 	// Get buffer pointer
 	glBindBuffer (BindFlags, VertexBufferObject);
-	void* ptr = glMapBuffer(BindFlags, GL_WRITE_ONLY);
+	//void* ptr = glMapBuffer(BindFlags, GL_WRITE_ONLY);
+
+	void* ptr = glMapBufferRange(BindFlags, 0, SizeInBytes, GL_MAP_WRITE_BIT | GL_MAP_INVALIDATE_BUFFER_BIT);
 
 	CheckGlError();
 
