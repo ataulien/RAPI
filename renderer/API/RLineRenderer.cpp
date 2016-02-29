@@ -81,6 +81,9 @@ static const char* LINE_PIXEL_SHADER =	"#version 420\n"
 										"void main () {"
 										" frag_colour = f_color;"
 										"}";
+#else
+static const char* LINE_PIXEL_SHADER = "";
+const char *LINE_VERTEX_SHADER ="";
 #endif
 
 
