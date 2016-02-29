@@ -111,20 +111,23 @@ namespace RAPI
 		}
 
 		for (int i = 0; i < EShaderType::ST_NUM_SHADER_TYPES; i++) {
-			if (state->_NumConstantBuffers[i] && state->_ConstantBuffersHash != State._ConstantBuffersHash) {
+			if (state->_NumConstantBuffers[i] && state->_ConstantBuffersHash[i] != State._ConstantBuffersHash[i]) {
 				memcpy(&State.ConstantBuffers[i], &state->ConstantBuffers[i], state->_NumConstantBuffers[i] * sizeof(state->ConstantBuffers[i]));	
+				State._ConstantBuffersHash[i] = State._ConstantBuffersHash[i];
 				Changes.ConstantBuffers[i] = true;
 				ChangesCount.ConstantBuffers[i]++;
 			}
-			if (state->_NumStructuredBuffers[i] && state->_StructuredBuffersHash != State._StructuredBuffersHash) {
+			if (state->_NumStructuredBuffers[i] && state->_StructuredBuffersHash[i] != State._StructuredBuffersHash[i]) {
 				memcpy(&State.StructuredBuffers[i], &state->StructuredBuffers[i], state->_NumStructuredBuffers[i] * sizeof(state->StructuredBuffers[i]));	
+				State._StructuredBuffersHash[i] = State._StructuredBuffersHash[i];
 				Changes.StructuredBuffers[i] = true;
 				ChangesCount.StructuredBuffers[i]++;
 			}
 
-			if (state->_NumTextures[i] && state->_TexturesHash != State._TexturesHash) {
+			if (state->_NumTextures[i] && state->_TexturesHash[i] != State._TexturesHash[i]) {
 				memcpy(&State.Textures[i], &state->Textures[i], state->_NumTextures[i] * sizeof(state->Textures[i]));	
 				State.Textures[i] = state->Textures[i];
+				State._TexturesHash[i] = state->_TexturesHash[i];
 				Changes.MainTexture = true;
 				ChangesCount.MainTexture++;
 			}
