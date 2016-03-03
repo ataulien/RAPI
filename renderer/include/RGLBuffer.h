@@ -9,6 +9,7 @@ namespace RAPI
 	// Numbers of frames should have buffers to prepare for
 	const int NUM_BUFFERSTASH_FRAME_STORAGES = 3;
 
+	class RBuffer;
 	class RInputLayout;
     class RGLBuffer : public RBaseBuffer
     {
@@ -47,7 +48,7 @@ namespace RAPI
 		/**
 		 * Updates the VAO-Info of this buffer, if this is used as a vertexbuffer 
 		 */
-		void UpdateVAO(const RInputLayout* inputLayout);
+		void UpdateVAO(const RInputLayout* inputLayout, RBuffer* instanceBuffer);
 
 		/**
 		* Returns the vertex array object 

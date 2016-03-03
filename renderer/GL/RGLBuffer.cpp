@@ -4,6 +4,7 @@
 #include "REngine.h"
 #include "RDevice.h"
 #include "RInputLayout.h"
+#include "RBuffer.h"
 
 using namespace RAPI;
 
@@ -15,6 +16,7 @@ RAPI::RGLBuffer::RGLBuffer()
 {
 	VertexBufferObject = 0;
 	VertexArrayObject = 0;
+	StashBufferRotation = 0;
 }
 
 RAPI::RGLBuffer::~RGLBuffer()
@@ -132,7 +134,7 @@ void RGLBuffer::DeallocateAPI()
 /**
 * Updates the VAO-Info of this buffer, if this is used as a vertexbuffer 
 */
-void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
+void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout, RBuffer* instanceBuffer)
 {
 	// Already initialized?
 	if(VertexArrayObject || BindFlags != GL_ARRAY_BUFFER)
@@ -146,8 +148,8 @@ void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 	CheckGlError();
 
 	glBindVertexArray(VertexArrayObject);
-	glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObject);
-
+	
+	size_t structuredByteSize = StructuredByteSize;
 	size_t offset = 0;
 	for(unsigned int i = 0; i < inputLayout->GetNumInputDescElements(); i++)
 	{
@@ -155,6 +157,26 @@ void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 		
 		glEnableVertexAttribArray(i);
 		CheckGlError();
+
+		// Bind main vertex-buffer or instance buffer depending on the slot
+		// TODO: Allow for multiple buffers
+		if(d.InputSlot == 0)
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, VertexBufferObject);
+		}
+		else
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, instanceBuffer->GetBufferObjectAPI());
+			StructuredByteSize = instanceBuffer->GetStructuredByteSize();
+		}
+
+		// Restart offset in case we are at a new buffer
+		if(i > 0 && offset != 0 && d.InputSlot != 0 && desc[i-1].InputSlot == 0)
+			offset = 0;
+
+		// Use instancing if we got a slot more than 1
+		// FIXME: Need to give an option for these for multiple vertex buffers...
+		glVertexAttribDivisor(i, d.InputSlot > 0 ? 1 : 0);
 
 		// Unpack the formats
 		switch(d.Format)
@@ -187,6 +209,8 @@ void RGLBuffer::UpdateVAO(const RInputLayout* inputLayout)
 		CheckGlError();
 		
 	}
+
+	BufferStash[StashBufferRotation].second = VertexArrayObject;
 }
 
 /** Switches to the next buffer in the stash, if we're doing maps on the same frame 

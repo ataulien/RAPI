@@ -131,37 +131,26 @@ bool RGLDevice::BindPipelineState(const RPipelineState& _state, const RStateMach
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, aniso); 
 	}
 
-	for(int i=0;i<2;i++)
+	
+	if(changes.VertexBuffers[0])
 	{
-		if(changes.VertexBuffers[i])
+		if(fs.VertexBuffers[0])
 		{
-			if(fs.VertexBuffers[i])
+			// Need to update the VAO of this to get the vertexlayout into the buffer
+			GLuint vao = fs.VertexBuffers[0]->GetVertexArrayObjectAPI();
+
+			// Create vao, if needed
+			if(!vao)
 			{
-				unsigned int offsets[] = { 0 };
-				unsigned int strides[] = { fs.VertexBuffers[i]->GetStructuredByteSize() };
-
-				// Need to update the VAO of this to get the vertexlayout into the buffer
-				GLuint vao = fs.VertexBuffers[i]->GetVertexArrayObjectAPI();
-
-				// Create vao, if needed
-				if(!vao)
-				{
-					fs.VertexBuffers[i]->UpdateVAO(fs.InputLayout);
-					vao = fs.VertexBuffers[i]->GetVertexArrayObjectAPI();
-				}
-
-				glBindVertexArray(fs.VertexBuffers[i]->GetVertexArrayObjectAPI()); 
-				CheckGlError();
+				fs.VertexBuffers[0]->UpdateVAO(fs.InputLayout, fs.VertexBuffers[1]);
+				vao = fs.VertexBuffers[0]->GetVertexArrayObjectAPI();
 			}
-			else
-			{
-				//unsigned int offsets[] = { 0 };
-				//unsigned int strides[] = { 0 };
-				//glBindVertexArray(0);
-				//CheckGlError();
-			}
+
+			glBindVertexArray(fs.VertexBuffers[0]->GetVertexArrayObjectAPI());
+			CheckGlError();
 		}
 	}
+
 
 	if(changes.IndexBuffer && fs.IndexBuffer)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, fs.IndexBuffer->GetBufferObjectAPI());
@@ -293,6 +282,8 @@ bool RGLDevice::DrawPipelineStateAPI(const struct RPipelineState &state,
 			break;
 
 		case EDrawCallType::DCT_DrawIndexedInstanced:
+			glDrawElementsInstancedBaseInstance(state.IDs.PrimitiveType, state.NumDrawElements, GL_UNSIGNED_INT, (void*)(state.StartIndexOffset * sizeof(uint32_t)), state.NumInstances, state.StartInstanceOffset);
+			//glDrawElementsInstanced(state.IDs.PrimitiveType, state.NumInstances, GL_UNSIGNED_INT, 0, state.NumDrawElements);
 			//context->DrawIndexedInstanced(state.NumDrawElements, state.NumInstances, state.StartIndexOffset, state.StartVertexOffset, state.StartInstanceOffset);
 			break;
 		}

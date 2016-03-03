@@ -270,6 +270,6 @@ static void _CheckGLError()
 }
 
 
-//#define CheckGlError() _CheckGLError()
-#define CheckGlError() 
+#define CheckGlError() _CheckGLError()
+//#define CheckGlError() 
 #endif
